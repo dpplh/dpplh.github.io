@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DPP's Life">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Step 1使用pod lib create来创建一个完整的pod 1$ pod lib create MyLibrary   如果要使用自己的pod-template可以在后面加上--template-url=URL根据提示选择自定义选项  Step 2 Objc or Swift第一个问题就是想要构建一个什么语言的pod，对于两个选择，CocoaPods都会将你的库设置为一个框架 1What">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CocoaPods【制作篇】">
+<meta property="og:url" content="http://yoursite.com/2019/04/23/CocoaPods【制作篇】/index.html">
+<meta property="og:site_name" content="DPP&#39;s Life">
+<meta property="og:description" content="Step 1使用pod lib create来创建一个完整的pod 1$ pod lib create MyLibrary   如果要使用自己的pod-template可以在后面加上--template-url=URL根据提示选择自定义选项  Step 2 Objc or Swift第一个问题就是想要构建一个什么语言的pod，对于两个选择，CocoaPods都会将你的库设置为一个框架 1What">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://r.sinaimg.cn/large/tc/mmbiz_qpic_cn/d42e16da1d03df6b305657f552d35c5c.jpg">
+<meta property="og:updated_time" content="2019-10-17T02:19:32.183Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CocoaPods【制作篇】">
+<meta name="twitter:description" content="Step 1使用pod lib create来创建一个完整的pod 1$ pod lib create MyLibrary   如果要使用自己的pod-template可以在后面加上--template-url=URL根据提示选择自定义选项  Step 2 Objc or Swift第一个问题就是想要构建一个什么语言的pod，对于两个选择，CocoaPods都会将你的库设置为一个框架 1What">
+<meta name="twitter:image" content="http://r.sinaimg.cn/large/tc/mmbiz_qpic_cn/d42e16da1d03df6b305657f552d35c5c.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/23/CocoaPods【制作篇】/">
+
+
+
+
+
+  <title>CocoaPods【制作篇】 | DPP's Life</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DPP's Life</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/23/CocoaPods【制作篇】/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DPP">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DPP's Life">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CocoaPods【制作篇】</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-23T20:15:49+08:00">
+                2019-04-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CocoaPods/" itemprop="url" rel="index">
+                    <span itemprop="name">CocoaPods</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+          
+          
+            <div class="post-gallery-row">
+              <a class="post-gallery-img fancybox" href="http://r.sinaimg.cn/large/tc/mmbiz_qpic_cn/d42e16da1d03df6b305657f552d35c5c.jpg" rel="gallery_ck1u35vhq0000ckcau0rfy2dr" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="http://r.sinaimg.cn/large/tc/mmbiz_qpic_cn/d42e16da1d03df6b305657f552d35c5c.jpg" itemprop="contentUrl">
+              </a>
+            
+          
+
+          
+          </div>
+        </div>
+      
+
+      
+        <h3 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h3><p>使用<code>pod lib create</code>来创建一个完整的pod</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod lib create MyLibrary</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果要使用自己的<code>pod-template</code>可以在后面加上<code>--template-url=URL</code><br>根据提示选择自定义选项</p>
+</blockquote>
+<h3 id="Step-2-Objc-or-Swift"><a href="#Step-2-Objc-or-Swift" class="headerlink" title="Step 2 Objc or Swift"></a>Step 2 Objc or Swift</h3><p>第一个问题就是想要构建一个什么语言的pod，对于两个选择，CocoaPods都会将你的库设置为一个框架</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">What language do you want to use?? [ Swift / ObjC ]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step-3-是否创建一个Demo"><a href="#Step-3-是否创建一个Demo" class="headerlink" title="Step 3 是否创建一个Demo"></a>Step 3 是否创建一个Demo</h3><p>该模板将会为你的库生成Xcode项目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Would you like to include a demo application with your library? [ Yes / No ]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step-4-选择一个测试框架"><a href="#Step-4-选择一个测试框架" class="headerlink" title="Step 4 选择一个测试框架"></a>Step 4 选择一个测试框架</h3><p>作为开源库稳定性很重要。Objctive-C还有两个流行的测试框架：</p>
+<ul>
+<li><a href="https://github.com/specta/specta" target="_blank" rel="noopener">Specta</a></li>
+<li><a href="https://github.com/kiwi-bdd/Kiwi" target="_blank" rel="noopener">Kiwi</a></li>
+</ul>
+<p>当你没有办法做选择的时候，官方推荐使用<a href="https://github.com/specta/specta" target="_blank" rel="noopener">Specta</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Which testing frameworks will you use? [ Specta / Kiwi / None ]</span><br></pre></td></tr></table></figure>
+
+<p>两个框架最主要的区别在于：Kiwi是Stubs / Mocks / Expectations的一体化方法，而Specta/Expecta是通过不同Podspces的模块化方法。在MyLib-Tests.pch中包含了测试框架所必要的设置，因此不需要将它包含在每个文件中。</p>
+<blockquote>
+<p>Swift值提供了一个选择<a href="https://github.com/Quick/Quick" target="_blank" rel="noopener">Quick/Nimble</a></p>
+</blockquote>
+<h3 id="Step-5-View-based-Testing"><a href="#Step-5-View-based-Testing" class="headerlink" title="Step 5 View-based Testing"></a>Step 5 View-based Testing</h3><p>基于快照的测试是一种智能方法，可以验证视图上不同操作的结果，使用FBSnapShotTestCase。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Would you like to do view based testing? [ Yes / No ]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Step-6-Prefixs"><a href="#Step-6-Prefixs" class="headerlink" title="Step 6 Prefixs"></a>Step 6 Prefixs</h3><p>项目前缀</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">What is your class prefix?</span><br></pre></td></tr></table></figure>
+
+<h3 id="文件树状图"><a href="#文件树状图" class="headerlink" title="文件树状图"></a>文件树状图</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">MyLibrary</span><br><span class="line">├── Example</span><br><span class="line">│   ├── MyLibrary</span><br><span class="line">│   ├── MyLibrary.xcodeproj</span><br><span class="line">│   ├── Podfile</span><br><span class="line">│   ├── Pods</span><br><span class="line">│   └── Tests</span><br><span class="line">├── LICENSE</span><br><span class="line">├── MyLibrary</span><br><span class="line">│   ├── Assets</span><br><span class="line">│   └── Classes</span><br><span class="line">├── MyLibrary.podspec</span><br><span class="line">├── README.md</span><br><span class="line">└── _Pods.xcodeproj -&gt; Example/Pods/Pods.xcodeproj</span><br></pre></td></tr></table></figure>
+
+<p>文件：</p>
+<ul>
+<li>_Pods.xcodeproj - 项目符号链接</li>
+<li>LICENSE - 默认使用MIT License</li>
+<li>MyLib.podspec - 项目使用的podspec</li>
+<li>README.md - markdown文档</li>
+</ul>
+<p>文件夹：</p>
+<ul>
+<li>MyLibrary -  放自己库的类文件</li>
+<li>Example - 生成的Demo和测试包</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-2190a8515a2d9695.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w1400"></p>
+<ol>
+<li>编辑Podspec元数据和README</li>
+<li>如果在选择生成Demo的时候没有选择Yes，将不会生成Example</li>
+<li>测试框架</li>
+<li>Development Pods部分，也可以在自己的库中直接修改</li>
+<li>用来初始化项目的Pods</li>
+</ol>
+<h3 id="新增文件"><a href="#新增文件" class="headerlink" title="新增文件"></a>新增文件</h3><p>删除<code>ReplaceMe.m</code>，新增<code>DPPRootObject</code>，<br><img src="http://upload-images.jianshu.io/upload_images/1424422-5b7d9986df722f0f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<h3 id="添加AFNetworking-和-微信第三方依赖"><a href="#添加AFNetworking-和-微信第三方依赖" class="headerlink" title="添加AFNetworking 和 微信第三方依赖"></a>添加AFNetworking 和 微信第三方依赖</h3><p>在<code>Classes</code>文件夹下创建一个<code>3rdLibraries</code>文件夹，用来放微信第三方资源文件</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-3795b4f488eccc3b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<p>修改<code>.podsepc</code>文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s.source_files = &apos;MyLibrary/Classes/*.&#123;h,m&#125;&apos;, &apos;MyLibrary/Classes/3rdLibraries/*.&#123;h&#125;&apos;  </span><br><span class="line">s.vendored_libraries = &apos;MyLibrary/Classes/3rdLibraries/*.&#123;a&#125;&apos;</span><br><span class="line">s.frameworks = &apos;SystemConfiguration&apos;,&apos;CoreGraphics&apos;,&apos;CoreTelephony&apos;,&apos;Security&apos;,&apos;CoreLocation&apos;,&apos;JavaScriptCore&apos;</span><br><span class="line">s.libraries = &apos;iconv&apos;,&apos;sqlite3&apos;,&apos;stdc++&apos;,&apos;z&apos;</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：<br>    * vendored_libraries：第三方.a文件<br>    * frameworks：该pod依赖的系统Framework<br>    * libraries：该pod以来的系统Lirary</p>
+<p>添加AFNetworking依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s.dependency &apos;AFNetworking&apos;, &apos;~&gt; 3.2.1&apos;</span><br></pre></td></tr></table></figure>
+
+<p>重新加载下Pod</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod install</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-9743efa5f2863a9b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<p>在viewController中尝试导入头文件，看报不报错</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-58bda3d93f4035d7.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<h3 id="制作subspec"><a href="#制作subspec" class="headerlink" title="制作subspec"></a>制作subspec</h3><p><img src="http://upload-images.jianshu.io/upload_images/1424422-20d3b746be8a732c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w907"></p>
+<p>例如AFNetworking中的<code>subspec</code>，也就是说我们在使用AFNetworking的时候不用下载全部的组件，喜欢用哪个就下哪个</p>
+<p>在<code>Classes</code>文件夹下，创建一个<code>DPPSub</code>文件夹，用来存放子模块文件，创建DPPChild类</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-f72c0c7d6acf508f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w560"></p>
+<p>修改<code>.podspec</code>文件，新增如下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s.subspec &apos;DPPSub&apos; do |cs|</span><br><span class="line">  cs.source_files = &apos;MyLibrary/Classes/DPPSub/*.&#123;h,m&#125;&apos;</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>DPPSub：subspec的名称<br>cs：变量名称，拥有spec的所有属性</p>
+</blockquote>
+<p>重新加载pod</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod install</span><br></pre></td></tr></table></figure>
+
+<p>运行成功，更新podspec版本号，重新打tag，推到仓库</p>
+<p>搜索下仓库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod search MyLibrary</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-d3f0dd19ba332368.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w431"></p>
+<h3 id="私有库依赖私有库"><a href="#私有库依赖私有库" class="headerlink" title="私有库依赖私有库"></a>私有库依赖私有库</h3><p>重新创建一个Pod，步骤与上面操作相同，修改<code>podspec</code>文件，添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s.dependency &apos;MyLibrary&apos;, &apos;0.2.0&apos;</span><br></pre></td></tr></table></figure>
+
+<p>然后检查</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod lib lint</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-30dc07d1340ff339.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w916"></p>
+<p>报错！因为没有指定私有库的source，因为私有库依赖AFNetworking，所以也需要指定下公有库的source</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod lib lint --sources=https://github.com/DPP-iOSer/DPPRepos.git,https://github.com/CocoaPods/Specs.git --allow-warnings</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-7884b75ca55bcd5f.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w1115"></p>
+<p>检查成功，将spec文件push到私有spec仓库中</p>
+<blockquote>
+<p>push时默认会检查spec文件，所以也需要指定source</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod repo push DPPRepos DPPDependency.podspec --sources=https://github.com/DPP-iOSer/DPPRepos.git,https://github.com/CocoaPods/Specs.git --allow-warnings</span><br></pre></td></tr></table></figure>
+
+<h3 id="Development-Pods"><a href="#Development-Pods" class="headerlink" title="Development Pods"></a>Development Pods</h3><p>Development Pods和普通的CocoaPods不一样，在这里是符号链接文件，在这里直接修改会直接修改原文件。引用时使用<code>#import &lt;MyLibrary/XYZ.h&gt;</code>的格式</p>
+<blockquote>
+<p>当添加新的或者已存在的<code>Pod/Classes</code>或者<code>Pods/Assets</code>或者更改<code>podspec</code>时，需要重新<code>pod install</code>或者<code>pod update</code></p>
+</blockquote>
+<h3 id="增加文件"><a href="#增加文件" class="headerlink" title="增加文件"></a>增加文件</h3><h2 id="部署自己的库"><a href="#部署自己的库" class="headerlink" title="部署自己的库"></a>部署自己的库</h2><p>首先检查<code>podspec</code> lint正确性，可以使用两种方式： <code>pod lib lint</code> 或者 <code>pod spec lint</code>，两者的不同之处：</p>
+<ul>
+<li>pod lib lint：不需要网络</li>
+<li>pod spec lint：需要检查外部的repo和关联的tag</li>
+</ul>
+<blockquote>
+<p>如果要发布到<code>trunk</code>不能存在任何CocoaPods的警告，但是Xcode警告是可以存在的</p>
+</blockquote>
+<h3 id="1-部署到trunk"><a href="#1-部署到trunk" class="headerlink" title="1. 部署到trunk"></a>1. 部署到trunk</h3><h4 id="1-注册CocoaPods账号"><a href="#1-注册CocoaPods账号" class="headerlink" title="1. 注册CocoaPods账号"></a>1. 注册CocoaPods账号</h4><p>想创建开源的Pod库，就要注册一个CocoaPods账号，我们使用终端注册，<code>email</code>用<code>Github</code>邮箱</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod trunk register lvhan_1215@163.com &apos;DPP-iOSer&apos;</span><br></pre></td></tr></table></figure>
+
+<p>等到终端出现下面文字，CocoaPods会发一个确认邮箱到你的邮箱上，登入邮箱进行确认<br><img src="http://upload-images.jianshu.io/upload_images/1424422-cb70aef56e8c95ee.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w847"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-65ab03031fec47e8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-acd71ef3066f9eb0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<p>注册成功!</p>
+<h4 id="2-trunk-me"><a href="#2-trunk-me" class="headerlink" title="2. trunk me"></a>2. trunk me</h4><p>确认后在终端中输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod trunk me</span><br></pre></td></tr></table></figure>
+
+<p>看到如下注册信息：<br><img src="http://upload-images.jianshu.io/upload_images/1424422-feab157ba6cc7f04.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w857"></p>
+<h4 id="3-发布-podspec"><a href="#3-发布-podspec" class="headerlink" title="3. 发布.podspec"></a>3. 发布.podspec</h4><p>将<code>.podspec</code>公布到公有的specs上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod trunk push DPPCode.podspec</span><br></pre></td></tr></table></figure>
+
+<p>成功后显示如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-afcbd13e92cc126e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w1148"></p>
+<p>可以通过上面的URL：<a href="https://cocoapods.org/pods/DPPCode" target="_blank" rel="noopener">https://cocoapods.org/pods/DPPCode</a>进入Pods查看自己的仓库信息</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-2b2612a4f6c3f0ed.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image"></p>
+<p>查询仓库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod search DPPCode</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-78aac48d55d1515b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w430"></p>
+<h3 id="2-部署到自己私有repo"><a href="#2-部署到自己私有repo" class="headerlink" title="2. 部署到自己私有repo"></a>2. 部署到自己私有repo</h3><h4 id="1-创建版本仓库"><a href="#1-创建版本仓库" class="headerlink" title="1. 创建版本仓库"></a>1. 创建版本仓库</h4><p><img src="http://upload-images.jianshu.io/upload_images/1424422-eace077566e0ffed.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w935"></p>
+<p>将远程的私有版本仓库添加到本地</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod repo add DPPRepo https://github.com/DPP-iOSer/DPPRepo.git</span><br></pre></td></tr></table></figure>
+
+<p>在Finder下查看<code>~/.cocoapods/repos/</code>，会发现多了一个<code>DPPRepo</code>的版本存储仓库<br><img src="http://upload-images.jianshu.io/upload_images/1424422-2ceee00b4a33e72d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w770"></p>
+<h4 id="2-创建代码库"><a href="#2-创建代码库" class="headerlink" title="2. 创建代码库"></a>2. 创建代码库</h4><p>创建步骤和上述创建版本仓库一样，将仓库clone到本地* 1、创建<code>.podspec</code>，代码仓库的pod描述文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod spec create DPPCode</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-2064d405e47a0d03.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w604"></p>
+<ul>
+<li><p>2、按需修改<code>.podspec</code>文件</p>
+</li>
+<li><p>3、验证仓库配置是否正确</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod lib lint</span><br></pre></td></tr></table></figure>
+
+<p>可以添加<code>--allow-warnings</code>允许警告</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod lib lint --allow-warnings</span><br></pre></td></tr></table></figure>
+
+<p>验证成功后显示如下：<br><img src="http://upload-images.jianshu.io/upload_images/1424422-8d39efb1a65cbe9d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w920"></p>
+<ul>
+<li><p>4、项目代码推到远程代码仓库 &amp; Tag</p>
+</li>
+<li><p>5、将描述文件推到版本库</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod repo push DPPRepo DPPCode.podspec</span><br></pre></td></tr></table></figure>
+
+<p>验证且推送成功显示如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-300a283f229b222c.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w910"></p>
+<p>并且在<code>~/.cocoapods/repos/DPPRepo/</code>文件夹发现新增的仓库描述信息</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-083d6b8ca2548a24.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w818"></p>
+<p>添加完成后我们就可以在pod中搜索</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pod search DPPCode</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-bb98157cf3299da0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w430"></p>
+<ul>
+<li>6、私有仓库的使用</li>
+</ul>
+<p>使用私人pod库的时候，需要在<code>podfile</code>中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source &quot;https://github.com/DPP-iOSer/DPPRepo.git&quot;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意是版本库的地址，而不是代码库的地址<br>如果还使用了公有库的pod，需要把公有库的仓库加上</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source &quot;https://github.com/CocoaPods/Specs.git&quot;</span><br></pre></td></tr></table></figure>
+
+<p>最后<code>Podfile</code>文件如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">source &quot;https://github.com/CocoaPods/Specs.git&quot;</span><br><span class="line">source &quot;https://github.com/DPP-iOSer/DPPRepo.git&quot;</span><br><span class="line"></span><br><span class="line">platform :ios, &apos;8.0&apos;</span><br><span class="line"></span><br><span class="line">target &apos;DPPDemo&apos; do</span><br><span class="line">use_frameworks!</span><br><span class="line"></span><br><span class="line">  pod &apos;DPPCode&apos;</span><br><span class="line">  pod &apos;AFNetworking&apos;, &apos;~&gt; 3.2.1&apos;</span><br><span class="line">  </span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>7、<code>pod install</code></li>
+</ul>
+<p>看到代码已经整合到项目中， Done!</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1424422-ec0e2fdc712f5e45.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="-w272"></p>
+<ul>
+<li>备注</li>
+</ul>
+<p>若存在如下情况：</p>
+<p>1、</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pod search DPPCode</span><br><span class="line">[!] Unable to find a pod with name, author, summary, or description matching `DPPCode`</span><br></pre></td></tr></table></figure>
+
+<p>删除 <code>search_index.json</code>文件并且重新<code>pod setup</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rm ~/Library/Caches/CocoaPods/search_index.json</span><br><span class="line">$ pod setup</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://qiubaiying.top/2017/03/08/CocoaPods%E5%85%AC%E6%9C%89%E4%BB%93%E5%BA%93%E7%9A%84%E5%88%9B%E5%BB%BA/" target="_blank" rel="noopener">CocoaPods公有仓库的创建
+</a></p>
+<p><a href="https://www.jianshu.com/p/0c640821b36f" target="_blank" rel="noopener">CocoaPods 私有仓库的创建（超详细）
+</a><br><a href="https://guides.cocoapods.org/making/getting-setup-with-trunk" target="_blank" rel="noopener">Getting setup with Trunk</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/23/CocoaPods【基础篇】/" rel="next" title="CocoaPods【基础篇】">
+                <i class="fa fa-chevron-left"></i> CocoaPods【基础篇】
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="DPP">
+            
+              <p class="site-author-name" itemprop="name">DPP</p>
+              <p class="site-description motion-element" itemprop="description">心有猛虎，细嗅蔷薇</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DPP-iOSer" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/01a516f93b5d" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-book"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="lvhan_1215@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-1"><span class="nav-number">1.</span> <span class="nav-text">Step 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-2-Objc-or-Swift"><span class="nav-number">2.</span> <span class="nav-text">Step 2 Objc or Swift</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-3-是否创建一个Demo"><span class="nav-number">3.</span> <span class="nav-text">Step 3 是否创建一个Demo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-4-选择一个测试框架"><span class="nav-number">4.</span> <span class="nav-text">Step 4 选择一个测试框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-5-View-based-Testing"><span class="nav-number">5.</span> <span class="nav-text">Step 5 View-based Testing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-6-Prefixs"><span class="nav-number">6.</span> <span class="nav-text">Step 6 Prefixs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件树状图"><span class="nav-number">7.</span> <span class="nav-text">文件树状图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增文件"><span class="nav-number">8.</span> <span class="nav-text">新增文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加AFNetworking-和-微信第三方依赖"><span class="nav-number">9.</span> <span class="nav-text">添加AFNetworking 和 微信第三方依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#制作subspec"><span class="nav-number">10.</span> <span class="nav-text">制作subspec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#私有库依赖私有库"><span class="nav-number">11.</span> <span class="nav-text">私有库依赖私有库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Development-Pods"><span class="nav-number">12.</span> <span class="nav-text">Development Pods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增加文件"><span class="nav-number">13.</span> <span class="nav-text">增加文件</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#部署自己的库"><span class="nav-number"></span> <span class="nav-text">部署自己的库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-部署到trunk"><span class="nav-number">1.</span> <span class="nav-text">1. 部署到trunk</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-注册CocoaPods账号"><span class="nav-number">1.1.</span> <span class="nav-text">1. 注册CocoaPods账号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-trunk-me"><span class="nav-number">1.2.</span> <span class="nav-text">2. trunk me</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-发布-podspec"><span class="nav-number">1.3.</span> <span class="nav-text">3. 发布.podspec</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-部署到自己私有repo"><span class="nav-number">2.</span> <span class="nav-text">2. 部署到自己私有repo</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-创建版本仓库"><span class="nav-number">2.1.</span> <span class="nav-text">1. 创建版本仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-创建代码库"><span class="nav-number">2.2.</span> <span class="nav-text">2. 创建代码库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DPP</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
