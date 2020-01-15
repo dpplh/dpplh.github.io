@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DPP's Life">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="HTTP协议之基础入门什么是HTTP?HTTP是TCP/IP基于应用层的通信协议，用于标准化客户端和服务端之间的通信方式。它定义了如何请求和传输内容。默认TCP端口为80，当然也可以使用其他端口。（HTTPS的默认端口为443） HTTP/0.91991年，提出了HTTP的第一个版本HTTP/0.9。它是有史以来最简单的协议。只有一个GET方法。如果客户端像服务端请求一个网页，将会发出如下简单的请">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP协议之基础入门">
+<meta property="og:url" content="http://yoursite.com/2020/01/15/HTTP协议之基础入门/index.html">
+<meta property="og:site_name" content="DPP&#39;s Blog">
+<meta property="og:description" content="HTTP协议之基础入门什么是HTTP?HTTP是TCP/IP基于应用层的通信协议，用于标准化客户端和服务端之间的通信方式。它定义了如何请求和传输内容。默认TCP端口为80，当然也可以使用其他端口。（HTTPS的默认端口为443） HTTP/0.91991年，提出了HTTP的第一个版本HTTP/0.9。它是有史以来最简单的协议。只有一个GET方法。如果客户端像服务端请求一个网页，将会发出如下简单的请">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://lvhan-image.test.upcdn.net/2020/01/15/865913c28ac84196972d029d97683314_th.jpg">
+<meta property="og:updated_time" content="2020-01-15T06:19:33.419Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP协议之基础入门">
+<meta name="twitter:description" content="HTTP协议之基础入门什么是HTTP?HTTP是TCP/IP基于应用层的通信协议，用于标准化客户端和服务端之间的通信方式。它定义了如何请求和传输内容。默认TCP端口为80，当然也可以使用其他端口。（HTTPS的默认端口为443） HTTP/0.91991年，提出了HTTP的第一个版本HTTP/0.9。它是有史以来最简单的协议。只有一个GET方法。如果客户端像服务端请求一个网页，将会发出如下简单的请">
+<meta name="twitter:image" content="http://lvhan-image.test.upcdn.net/2020/01/15/865913c28ac84196972d029d97683314_th.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/01/15/HTTP协议之基础入门/">
+
+
+
+
+
+  <title>HTTP协议之基础入门 | DPP's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DPP's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/15/HTTP协议之基础入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DPP">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DPP's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HTTP协议之基础入门</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-15T14:16:56+08:00">
+                2020-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/01/15/HTTP协议之基础入门/" class="leancloud_visitors" data-flag-title="HTTP协议之基础入门">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+          
+          
+            <div class="post-gallery-row">
+              <a class="post-gallery-img fancybox" href="http://lvhan-image.test.upcdn.net/2020/01/15/865913c28ac84196972d029d97683314_th.jpg" rel="gallery_ck5ex0r180005x3khb64cj5m8" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="http://lvhan-image.test.upcdn.net/2020/01/15/865913c28ac84196972d029d97683314_th.jpg" itemprop="contentUrl">
+              </a>
+            
+          
+
+          
+          </div>
+        </div>
+      
+
+      
+        <h1 id="HTTP协议之基础入门"><a href="#HTTP协议之基础入门" class="headerlink" title="HTTP协议之基础入门"></a>HTTP协议之基础入门</h1><h2 id="什么是HTTP"><a href="#什么是HTTP" class="headerlink" title="什么是HTTP?"></a>什么是HTTP?</h2><p>HTTP是TCP/IP基于应用层的通信协议，用于标准化客户端和服务端之间的通信方式。它定义了如何请求和传输内容。默认TCP端口为80，当然也可以使用其他端口。（HTTPS的默认端口为443）</p>
+<h2 id="HTTP-0-9"><a href="#HTTP-0-9" class="headerlink" title="HTTP/0.9"></a>HTTP/0.9</h2><p>1991年，提出了HTTP的第一个版本HTTP/0.9。它是有史以来最简单的协议。只有一个<code>GET</code>方法。如果客户端像服务端请求一个网页，将会发出如下简单的请求：</p>
+<p>客户端请求：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET /index.html</span><br></pre></td></tr></table></figure>
+
+<p>服务器响应：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(response only)</span><br><span class="line">(connection closed)</span><br></pre></td></tr></table></figure>
+
+<p>如上，服务器获取到请求，将HTML响应作为请求，一旦内容传输完，连接将被关闭。</p>
+<p>总结：</p>
+<ul>
+<li>没有请求头</li>
+<li>只有一个<code>GET</code>方法</li>
+<li>响应必须是HTML</li>
+</ul>
+<h2 id="HTTP-1-0"><a href="#HTTP-1-0" class="headerlink" title="HTTP/1.0"></a>HTTP/1.0</h2><p>1996年，HTTP/1.0被提出，与HTTP/0.9有了很大的改进。<br>与HTTP/0.9仅针对HTML响应设计的不同，HTTP/1.0可以处理其他响应格式，如图像，视频文件，纯文本和任何其他内容类型。并且添加了<code>POST</code>和<code>HEAD</code>方法，更改了请求和响应格式，在请求和响应都添加了HTTP请求头，添加了状态码和表示响应，引入字符集，multi-part类型，授权，缓存，内容编码等。</p>
+<p>HTTP/1.0 请求如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GET / HTTP/1.0</span><br><span class="line">Host: dpplh.com</span><br><span class="line">User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36</span><br><span class="line">Accept: */*</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>综上，除了请求以外，还发送了客户端信息和所接受的响应类型。</p>
+</blockquote>
+<p>响应如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.0 200 OK </span><br><span class="line">Content-Type: text/plain</span><br><span class="line">Content-Length: 137582</span><br><span class="line">Expires: Mon, 04 Jan 2021 06:54:02 GMT</span><br><span class="line">Last-Modified: Sat, 04 Jan 2020 01:50:20 GMT</span><br><span class="line">Server: sffe</span><br><span class="line"></span><br><span class="line">(response body)</span><br><span class="line">(connection closed)</span><br></pre></td></tr></table></figure>
+
+<p>在响应最开始有HTTP/1.0（HTTP，后接版本号），然后是状态码</p>
+<h1 id="状态码-｜-请求响应类型"><a href="#状态码-｜-请求响应类型" class="headerlink" title="状态码 ｜ 请求响应类型"></a><a href="https://zh.wikipedia.org/wiki/HTTP%E7%8A%B6%E6%80%81%E7%A0%81" target="_blank" rel="noopener">状态码</a> ｜ 请求响应类型</h1><p>在此叫新版本中，请求和响应头仍保持ASCII编码状态，但是响应主体可以是任何类型，即图像，视频，HTML，纯文本和其他任何内容类型。因此，现在服务器可以将任何内容类型发送到客户端。</p>
+<p>HTTP/1.0主要缺点之一就是每个连接不能有多个请求。也就是每当客户端需要服务器中的某些内容，都必须开启新的TCP连接，并且在满足单个请求之后，连接被关闭。对于任何下一个请求，都必须建立在新连接上。每次的TCP连接都需要三次握手，会有严重的性能问题。</p>
+<blockquote>
+<p>某些在HTTP/1.0 尝试通过引入一个新的标头，<code>Connection: keep-alive</code>，用来告诉服务器不要关闭连接，但是并没有得到广泛支持，问题仍然存在。</p>
+</blockquote>
+<p>HTTP除了无连接之外，还是一种无状态协议，即服务器不维护有关的客户端信息，因此每个连接都必须含有服务器所需要的客户端信息，并且不与之前任何一个旧的请求有关联。因此除了客户端必须建立大量连接之外，还需要在请求过程中发送一些冗余的数据，增加了带宽的占用。</p>
+<h2 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP/1.1"></a>HTTP/1.1</h2><p>1999年，仅过了三年，HTTP/1.1就发布了，在HTTP/1.0的基础上做了很多的改进。</p>
+<ul>
+<li><p>新的HTTP请求方法：PUT、PATCH、OPTIONS、DELETE</p>
+</li>
+<li><p>Host主机名标识，在HTTP/1.0不是必须的，但在HTTP/1.1变成必须的</p>
+</li>
+<li><p>持久连接，在HTTP/1.0每个连接中只有一个请求，并且一旦没出请求，连接就会被关闭，这会导致性能下降和延迟问题。HTTP/1.0加入了持久连接，即默认情况下未关闭连接并且保持打开状态，从而允许多个顺序请求。如果要关闭连接，<code>Connection: close</code>。客户端通常在最后一个请求中发送此标头，以安全关闭连接。</p>
+</li>
+<li><p>流水线化：客户端可以向服务器发送多个请求，而不必等待来自同一个连接上的服务器响应，并且服务器必须保持接收请求的相同顺序发送响应。</p>
+</li>
+</ul>
+<blockquote>
+<p>在流水线化中，客户端怎么知道第一个响应下载完成且下一个响应内容开始？<br>此时必须提供<code>Content-Length</code>标头，客户端可以使用该标头来标识响应的结束位置，并且可以开始等待下一个响应。</p>
+</blockquote>
+<h3 id="疑问：如果数据是动态的并且服务器无法预知内容长度，该怎么办呢？"><a href="#疑问：如果数据是动态的并且服务器无法预知内容长度，该怎么办呢？" class="headerlink" title="疑问：如果数据是动态的并且服务器无法预知内容长度，该怎么办呢？"></a>疑问：如果数据是动态的并且服务器无法预知内容长度，该怎么办呢？</h3><p>为了解决这个问题，HTTP/1.1引入了分块编码。在这种情况下，服务器可能会省略<code>Content-Length</code>，而推荐使用分块编码。但是，如果他们都不可用，则必须在请求结束时关闭连接。</p>
+<ul>
+<li><code>分块传输</code>如果是动态内容，则当服务器无法真正确定<code>Content-Length</code>传输开始的时间时，它可能会开始分块发送内容，并在<code>Content-Length</code>发送时为每个块添加内容，并且当前所有块都以发送（即整个传输已完成）时，它会发送一个空块（<code>Content-Length</code>即将设置为零)，以表示传输以完成的客户端。为了通知客户端分块传输的信息，服务器需包含标头<code>Transfer-Encoding: chunked</code></li>
+<li>与HTTP/1.0仅具有基本身份验证的情况不同，HTTP/1.1包括摘要身份验证和代理身份验证</li>
+<li>缓存</li>
+<li>Byte Range</li>
+<li>字符集</li>
+<li>语言</li>
+<li>Cookie</li>
+<li>更强的压缩支持</li>
+<li>新的状态码</li>
+<li>…</li>
+</ul>
+<h2 id="SPDY"><a href="#SPDY" class="headerlink" title="SPDY"></a>SPDY</h2><p>SPDY是Google在2019年为了提高网络速度，并在降低网络延迟的同时提高网络安全性时提出的。这个协议在Chrome浏览器证明可行后，就被当作HTTP/2的基础，主要特性都在HTTP/2中被继承。</p>
+<p>SPDY里的预置字典为头部特殊设计的，但它使用的仍然是DEFLATE算法，其中包括动态Huffman编码以及字符串匹配。但是因为DEFLATE算法使用的是落后的字符串匹配以及动态Huffman编码，攻击者可以从压缩头部提取密钥认证cookies，从而很容易进行犯罪行为。攻击者还可以控制部分请求头，并且修改部分请求来找回整个cookie以及观察到再压缩情况下请求改变的总大小。</p>
+<h2 id="HTTP-2-0"><a href="#HTTP-2-0" class="headerlink" title="HTTP/2.0"></a>HTTP/2.0</h2><p>HTTP/2.0设计用于低延迟的内容传输，与HTTP/1.1的不同之处：</p>
+<h3 id="1-二进制协议：头和数据体都是二进制"><a href="#1-二进制协议：头和数据体都是二进制" class="headerlink" title="1. 二进制协议：头和数据体都是二进制"></a>1. 二进制协议：头和数据体都是二进制</h3><pre><code>HTTP/2.0主要构件模块是帧和流，二进制协议易于解析，解决HTTP/1.x存在的延迟问题。</code></pre><h4 id="帧和流"><a href="#帧和流" class="headerlink" title="帧和流"></a>帧和流</h4><p>HTTP消息由一个或者多个帧组成。有一个<code>HEADERS</code>用于元数据和帧DATA帧的有效载荷，并存在集中其他类型的帧（HEADERS，DATA，RST_STREAM，SETTINGS，PRIORITY…)。    </p>
+<p>每个HTTP/2.0请求和响应有一个唯一的ID，并将其划分为帧。每个帧即二进制数据，帧的集合为流，并且每个帧都有一个公共的头。</p>
+<blockquote>
+<p>客户端发起的任何请求都是使用的奇数，服务端的响应具有偶数流ID</p>
+</blockquote>
+<p>除了<code>HEADERS</code>和<code>DATA</code>，还有一种特殊的帧类型<code>RST_STREAM</code>，用于终止某些流，即客户端可以发送该帧让服务器知道不再需要该流。</p>
+<p>HTTP/1.1中，服务器停止发送到客户端的响应被关闭，导致轻微的延迟。因为每个新的请求都需要重新连接。HTTP/2.0中，客户端使用<code>RST_STREAM</code>来通知服务器并停止接收特定的流，同时连接不断开，可以继续接收其他的流。</p>
+<h3 id="2-多路复用：通过单个连接的多个异步HTTP请求"><a href="#2-多路复用：通过单个连接的多个异步HTTP请求" class="headerlink" title="2. 多路复用：通过单个连接的多个异步HTTP请求"></a>2. 多路复用：通过单个连接的多个异步HTTP请求</h3><p>使用帧和流进行请求和响应，所以一旦打开TCP连接，所有流都将通过同一连接异步发送，无需额外的连接。相反，服务器以相同的异步方式进行响应，即响应没有顺序，客户端使用分配的流ID来表示特性数据所属的流，这样就解决了HTTP/1.x中存在的<code>行头阻塞</code>问题。</p>
+<h3 id="3-使用HPack进行头部压缩"><a href="#3-使用HPack进行头部压缩" class="headerlink" title="3. 使用HPack进行头部压缩"></a>3. 使用HPack进行头部压缩</h3><p>当我们不断的从客户端访问服务器时，会反复的发送大量的冗余数据，有时还可能会出现cookie，这回增加头部大小，导致带宽使用和延迟增加。</p>
+<p>与请求和响应不同，标头不采用<code>gzip</code>和<code>comparess</code>的格式进行压缩，而是如下三种压缩方法：</p>
+<ul>
+<li>静态字典：一个有着61个通用头部字段，并且部分字段是有预定义值的预定义字典。</li>
+<li>动态字典：在连接中，一些列实际的头部会被添加进去。因为字典有限制大小，所以当新项被增加，旧项就会被移除。</li>
+<li>Huffman编码：一种可以被用来对任何字符串：Key or Value，进行编码的静态Huffman编码。这种编码方式专门为HTTP响应或者响应头设计的——ASCII里的数字和字母可以更短。</li>
+</ul>
+<h3 id="4-服务器推送：单个请求多个响应"><a href="#4-服务器推送：单个请求多个响应" class="headerlink" title="4. 服务器推送：单个请求多个响应"></a>4. 服务器推送：单个请求多个响应</h3><p>HTTP/2.0允许再客户端未经请求，主动向客户端发送资源。</p>
+<h3 id="5-请求优先级"><a href="#5-请求优先级" class="headerlink" title="5. 请求优先级"></a>5. 请求优先级</h3><p>客户端在可以发送<code>PRIORITY</code>帧来更改流的优先级。如果没有优先级信息，则服务器异步处理请求，即没有任何顺序。如果分配了优先级，则服务器根据此优先级信息确定需要分配多少资源来处理哪个请求。</p>
+<h2 id="MIME-Types"><a href="#MIME-Types" class="headerlink" title="MIME Types"></a>MIME Types</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">text/plain</span><br><span class="line">text/html</span><br><span class="line">image/jpeg</span><br><span class="line">image/png</span><br><span class="line">audio/mpeg</span><br><span class="line">audio/ogg</span><br><span class="line">audio/*</span><br><span class="line">video/mp4</span><br><span class="line">application/*</span><br><span class="line">application/json</span><br><span class="line">application/javascript</span><br><span class="line">application/ecmascript</span><br><span class="line">application/octet-stream</span><br><span class="line">…</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">描述</th>
+<th align="center">事例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">text</td>
+<td align="center">普通文本</td>
+<td align="center">text/plain, <br>text/html, <br>text/css, <br>text/javascript</td>
+</tr>
+<tr>
+<td align="center">image</td>
+<td align="center">图像；不包括视频，但是Gif也是用image类型</td>
+<td align="center">image/gif, <br>image/png, <br>image/jpeg, <br>image/bmp, <br>image/webp, <br>image/x-icon, <br>image/vnd.microsoft.icon</td>
+</tr>
+<tr>
+<td align="center">audio</td>
+<td align="center">音频文件</td>
+<td align="center">audio/midi, <br>audio/mpeg, <br>audio/webm, <br>audio/ogg, <br>audio/wav</td>
+</tr>
+<tr>
+<td align="center">video</td>
+<td align="center">视频文件</td>
+<td align="center">video/webm, <br>video/ogg</td>
+</tr>
+<tr>
+<td align="center">application</td>
+<td align="center">二进制数据</td>
+<td align="center">application/octet-stream, <br>application/xhtml+xml, <br>application/xml, <br>application/pdf</td>
+</tr>
+</tbody></table>
+<p>对于text类型的文件如果没有特定的subtype，默认使用text/plain。二进制文件没有特定或者已知的subtype，默认使用application/octet-stream</p>
+<h3 id="重点的MIME类型"><a href="#重点的MIME类型" class="headerlink" title="重点的MIME类型"></a>重点的MIME类型</h3><h4 id="1、-application-octet-stream"><a href="#1、-application-octet-stream" class="headerlink" title="1、 application/octet-stream"></a>1、 application/octet-stream</h4><p>这是应用程序文件的默认值，意思是未知的应用程序文件，浏览器一般不会自动执行和询问执行。</p>
+<h4 id="2、-text-plain"><a href="#2、-text-plain" class="headerlink" title="2、 text/plain"></a>2、 text/plain</h4><p>文件的默认值，即使它意味着位置的文本文件，浏览器也可以直接展示。</p>
+<h4 id="3、-text-css"><a href="#3、-text-css" class="headerlink" title="3、 text/css"></a>3、 text/css</h4><p>在网页中要被解析为css的任何css文件，都必须制定MIME为text/css。通常情况下浏览器不识别.css为后缀的文件MIME类型，而是将其以MIME为text/plain或application/octet-stream来发送给浏览器。</p>
+<h4 id="4、-text-html"><a href="#4、-text-html" class="headerlink" title="4、 text/html"></a>4、 text/html</h4><p>所有的HTML内容都应该使用这种类型。XHTML的其他MIME类型（如application/xml+html）现在基本不使用。</p>
+<h4 id="5、-图片类型"><a href="#5、-图片类型" class="headerlink" title="5、 图片类型"></a>5、 图片类型</h4><table>
+<thead>
+<tr>
+<th align="center">MIME类型</th>
+<th align="center">图片类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">image/gif</td>
+<td align="center">GIF图片</td>
+</tr>
+<tr>
+<td align="center">image/jpeg</td>
+<td align="center">JPEG图片</td>
+</tr>
+<tr>
+<td align="center">image/png</td>
+<td align="center">PNG图片</td>
+</tr>
+<tr>
+<td align="center">image/svg+xml</td>
+<td align="center">SVP图片（矢量图）</td>
+</tr>
+</tbody></table>
+<h4 id="6、-音视频类型"><a href="#6、-音视频类型" class="headerlink" title="6、 音视频类型"></a>6、 音视频类型</h4><table>
+<thead>
+<tr>
+<th align="center">MIME类型</th>
+<th align="center">音视频类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">audio/wave<br>audio/wav<br>audio/x-wav<br>audio/x-pn-wav</td>
+<td align="center">音频流媒体文件，一般支持PCM编码</td>
+</tr>
+<tr>
+<td align="center">audio/webm</td>
+<td align="center">WebM音频文件格式</td>
+</tr>
+<tr>
+<td align="center">video/webm</td>
+<td align="center">采用WebM视频文件格式的音频文件</td>
+</tr>
+<tr>
+<td align="center">audio/ogg</td>
+<td align="center">采用OGG多媒体文件格式的音频文件</td>
+</tr>
+<tr>
+<td align="center">video/ogg<br>application/ogg</td>
+<td align="center">采用OGG多媒体文件格式的音视频文件</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/17/ASCII，Unicode，UTF-8和Base64/" rel="next" title="ASCII，Unicode，UTF-8和Base64">
+                <i class="fa fa-chevron-left"></i> ASCII，Unicode，UTF-8和Base64
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="DPP">
+            
+              <p class="site-author-name" itemprop="name">DPP</p>
+              <p class="site-description motion-element" itemprop="description">心有猛虎，细嗅蔷薇</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DPP-iOSer" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/01a516f93b5d" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-book"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="lvhan_1215@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP协议之基础入门"><span class="nav-number">1.</span> <span class="nav-text">HTTP协议之基础入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是HTTP"><span class="nav-number">1.1.</span> <span class="nav-text">什么是HTTP?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-0-9"><span class="nav-number">1.2.</span> <span class="nav-text">HTTP/0.9</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-1-0"><span class="nav-number">1.3.</span> <span class="nav-text">HTTP/1.0</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态码-｜-请求响应类型"><span class="nav-number">2.</span> <span class="nav-text">状态码 ｜ 请求响应类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-1-1"><span class="nav-number">2.1.</span> <span class="nav-text">HTTP/1.1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#疑问：如果数据是动态的并且服务器无法预知内容长度，该怎么办呢？"><span class="nav-number">2.1.1.</span> <span class="nav-text">疑问：如果数据是动态的并且服务器无法预知内容长度，该怎么办呢？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPDY"><span class="nav-number">2.2.</span> <span class="nav-text">SPDY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-2-0"><span class="nav-number">2.3.</span> <span class="nav-text">HTTP/2.0</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-二进制协议：头和数据体都是二进制"><span class="nav-number">2.3.1.</span> <span class="nav-text">1. 二进制协议：头和数据体都是二进制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#帧和流"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">帧和流</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-多路复用：通过单个连接的多个异步HTTP请求"><span class="nav-number">2.3.2.</span> <span class="nav-text">2. 多路复用：通过单个连接的多个异步HTTP请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-使用HPack进行头部压缩"><span class="nav-number">2.3.3.</span> <span class="nav-text">3. 使用HPack进行头部压缩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-服务器推送：单个请求多个响应"><span class="nav-number">2.3.4.</span> <span class="nav-text">4. 服务器推送：单个请求多个响应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-请求优先级"><span class="nav-number">2.3.5.</span> <span class="nav-text">5. 请求优先级</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MIME-Types"><span class="nav-number">2.4.</span> <span class="nav-text">MIME Types</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重点的MIME类型"><span class="nav-number">2.4.1.</span> <span class="nav-text">重点的MIME类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、-application-octet-stream"><span class="nav-number">2.4.1.1.</span> <span class="nav-text">1、 application/octet-stream</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、-text-plain"><span class="nav-number">2.4.1.2.</span> <span class="nav-text">2、 text/plain</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、-text-css"><span class="nav-number">2.4.1.3.</span> <span class="nav-text">3、 text/css</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、-text-html"><span class="nav-number">2.4.1.4.</span> <span class="nav-text">4、 text/html</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、-图片类型"><span class="nav-number">2.4.1.5.</span> <span class="nav-text">5、 图片类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6、-音视频类型"><span class="nav-number">2.4.1.6.</span> <span class="nav-text">6、 音视频类型</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DPP</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("s9C3pTBFYISN8KXScgXCG8i6-gzGzoHsz", "tlXbQUH8NYRJbxrVxpErnhD8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
