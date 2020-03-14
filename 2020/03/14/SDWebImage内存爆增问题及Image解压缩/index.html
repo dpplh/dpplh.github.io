@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="ASCII，Unicode，UTF-8和Base64看完这篇你就会。">
+<meta name="description" content="记录一次开发中遇到的SDWebImage内存爆增，及Image解压缩过程。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ASCII，Unicode，UTF-8和Base64">
-<meta property="og:url" content="http://yoursite.com/2019/10/17/ASCII，Unicode，UTF-8和Base64/index.html">
+<meta property="og:title" content="SDWebImage内存爆增问题及Image解压缩">
+<meta property="og:url" content="http://yoursite.com/2020/03/14/SDWebImage内存爆增问题及Image解压缩/index.html">
 <meta property="og:site_name" content="DPP&#39;s Blog">
-<meta property="og:description" content="ASCII，Unicode，UTF-8和Base64看完这篇你就会。">
+<meta property="og:description" content="记录一次开发中遇到的SDWebImage内存爆增，及Image解压缩过程。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://lvhan-image.test.upcdn.net/2020/03/12/%E7%BC%96%E7%A0%81.jpg">
-<meta property="og:updated_time" content="2020-03-12T11:14:28.896Z">
+<meta property="og:image" content="http://lvhan-image.test.upcdn.net/2020/03/14/SDWebImage.jpg">
+<meta property="og:updated_time" content="2020-03-14T15:23:11.396Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ASCII，Unicode，UTF-8和Base64">
-<meta name="twitter:description" content="ASCII，Unicode，UTF-8和Base64看完这篇你就会。">
-<meta name="twitter:image" content="http://lvhan-image.test.upcdn.net/2020/03/12/%E7%BC%96%E7%A0%81.jpg">
+<meta name="twitter:title" content="SDWebImage内存爆增问题及Image解压缩">
+<meta name="twitter:description" content="记录一次开发中遇到的SDWebImage内存爆增，及Image解压缩过程。">
+<meta name="twitter:image" content="http://lvhan-image.test.upcdn.net/2020/03/14/SDWebImage.jpg">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/10/17/ASCII，Unicode，UTF-8和Base64/">
+  <link rel="canonical" href="http://yoursite.com/2020/03/14/SDWebImage内存爆增问题及Image解压缩/">
 
 
 
 
 
-  <title>ASCII，Unicode，UTF-8和Base64 | DPP's Blog</title>
+  <title>SDWebImage内存爆增问题及Image解压缩 | DPP's Blog</title>
   
 
 
@@ -244,7 +244,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/17/ASCII，Unicode，UTF-8和Base64/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/14/SDWebImage内存爆增问题及Image解压缩/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="DPP">
@@ -261,7 +261,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ASCII，Unicode，UTF-8和Base64</h1>
+          <h1 class="post-title" itemprop="name headline">SDWebImage内存爆增问题及Image解压缩</h1>
         
 
         <div class="post-meta">
@@ -273,8 +273,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-17T22:17:03+08:00">
-                2019-10-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-14T23:21:09+08:00">
+                2020-03-14
               </time>
             
 
@@ -296,8 +296,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/基础知识点/" itemprop="url" rel="index">
-                    <span itemprop="name">基础知识点</span>
+                  <a href="/categories/iOS踩坑之路/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS踩坑之路</span>
                   </a>
                 </span>
 
@@ -313,7 +313,7 @@
 
           
           
-             <span id="/2019/10/17/ASCII，Unicode，UTF-8和Base64/" class="leancloud_visitors" data-flag-title="ASCII，Unicode，UTF-8和Base64">
+             <span id="/2020/03/14/SDWebImage内存爆增问题及Image解压缩/" class="leancloud_visitors" data-flag-title="SDWebImage内存爆增问题及Image解压缩">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -331,7 +331,7 @@
 
           
               <div class="post-description">
-                  ASCII，Unicode，UTF-8和Base64看完这篇你就会。
+                  记录一次开发中遇到的SDWebImage内存爆增，及Image解压缩过程。
               </div>
           
 
@@ -350,8 +350,8 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="http://lvhan-image.test.upcdn.net/2020/03/12/%E7%BC%96%E7%A0%81.jpg" rel="gallery_ck7rrf0o400006bkhq2opp4oq" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="http://lvhan-image.test.upcdn.net/2020/03/12/%E7%BC%96%E7%A0%81.jpg" itemprop="contentUrl">
+              <a class="post-gallery-img fancybox" href="http://lvhan-image.test.upcdn.net/2020/03/14/SDWebImage.jpg" rel="gallery_ck7rrf0oc00056bkhrdw7i9wy" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="http://lvhan-image.test.upcdn.net/2020/03/14/SDWebImage.jpg" itemprop="contentUrl">
               </a>
             
           
@@ -362,82 +362,46 @@
       
 
       
-        <p>因为计算机只能处理数字，所以如果要处理文本，就得先把文本转换成数字才能处理。</p>
-<h2 id="ASCII"><a href="#ASCII" class="headerlink" title="ASCII"></a>ASCII</h2><p>最早计算机在设计时采用8bit作为一个字节（byte），所以一个字节能标识的最大整数就是255「11111111(B) = 255」，0-255被用来标识大小写英文字母、数字和一些符号，这个编码表就被称为ASCII编码。</p>
-<h2 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h2><p>如果要用来表示中文（汉字数量大约近10w个），显然一个字节是不够的，至少需要两个字节。而且还不能和ASCII编码表冲突，所以中国指定了GB2312编码，用来编码中文。<br>类似的，其他语言也面临这个问题，为了统一所有文字的编码，Unicode应运而生。</p>
-<p>Unicode通常使用两个字节来表示一个字符，所有的英文编码从单字节变成了双字节，把高字节全部填0补齐。</p>
-<p>目前Unicode字符分为17组编排，0x0000至0x10FFFF，每组称为平面（Plane），而没平面拥有65535个码位，共1114112个，然而目前只用了少数平面。</p>
-<h2 id="UTF-8"><a href="#UTF-8" class="headerlink" title="UTF-8"></a>UTF-8</h2><p>UTF-8(8-bit Unicode Transformation Format)是一种针对Unicode可变长度字符编码。</p>
-<h3 id="UTF-8-与-Unicode区别"><a href="#UTF-8-与-Unicode区别" class="headerlink" title="UTF-8 与 Unicode区别"></a>UTF-8 与 Unicode区别</h3><ul>
-<li>Unicode 是 「字符集」</li>
-<li>UTF-8 是 「编码规则」</li>
-</ul>
-<p>字符集：为每一个字符分配一个唯一的ID(码位/码点/Code Point)<br>编码规则：将码位转换为字节序列的规则（编码/解码 =&gt; 加密/解密）</p>
-<h3 id="UTF-8编码规则"><a href="#UTF-8编码规则" class="headerlink" title="UTF-8编码规则"></a>UTF-8编码规则</h3><p>UTF-8是一种变长字节编码方式。最小编码单位（code unit）为一个字节。一个字节的前1-3个bit为描述性部分，后面为实际序号部分。</p>
+        <h1 id="SDWebImage内存爆增问题及Image解压缩"><a href="#SDWebImage内存爆增问题及Image解压缩" class="headerlink" title="SDWebImage内存爆增问题及Image解压缩"></a>SDWebImage内存爆增问题及Image解压缩</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在一次偶然Feed流开发，出现滑动视图后内存爆增并且退出Feed界面内存没有被回收的问题。</p>
+<p><img src="http://lvhan-image.test.upcdn.net/2020/03/14/15840136085886.jpg" alt></p>
+<h2 id="分析定位"><a href="#分析定位" class="headerlink" title="分析定位"></a>分析定位</h2><p>用instrument定位到的内存增长点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (nullable UIImage *)sd_decompressedImageWithImage:(nullable UIImage *)image</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://lvhan-image.test.upcdn.net/2020/03/14/15840138042835.jpg" alt></p>
+<p>定位到SDWebImage在对图片进行解压缩的时候内存爆增，但是从代码中看<code>Create</code>和<code>Realse</code>配对使用，看起来也没什么问题，那就应该不是内存泄漏了，应该是这几行代码在执行过程中产生的内存消耗，但是为什么消耗这么大？？？</p>
+<h2 id="补充知识：图片解压缩"><a href="#补充知识：图片解压缩" class="headerlink" title="补充知识：图片解压缩"></a>补充知识：图片解压缩</h2><h3 id="图片加载过程"><a href="#图片加载过程" class="headerlink" title="图片加载过程"></a>图片加载过程</h3><p>在说图片解压缩之前，先说说从磁盘加载一张图片并显示到屏幕上的步骤：</p>
 <ol>
-<li>对于单字节字符，占用一个字节空间。0之后的所有部分（7个bit）代表Unicode中的序号。因此对于英文字母，UTF-8编码和ASCII码是相同的。</li>
-<li>对于n字节字符，第一个字节的前n为都为1，第n+1为0，后面字节的前两位上为10.剩下没有提及的二进制位为这个符号的unicode码。</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th align="center">Unicode符号范围「十六进制」</th>
-<th align="center">UTF-8编码「二进制」</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">0000 0000-0000 007F</td>
-<td align="center">0xxxxxxxx</td>
-</tr>
-<tr>
-<td align="center">0000 0080-0000 07FF</td>
-<td align="center">110xxxxx 10xxxxxx</td>
-</tr>
-<tr>
-<td align="center">0000 0800-0000 FFFF</td>
-<td align="center">1110xxxx 10xxxxxx 10xxxxxx</td>
-</tr>
-<tr>
-<td align="center">0001 0000-0010 FFFF</td>
-<td align="center">11110xxx 10xxxxxx 10xxxxxx</td>
-</tr>
-</tbody></table>
-<p>综上：如果一个字节的第一位是0，则这个字节单独就是一个字符；如果第一位是1，则连续有多少个1，就表示当前占用多少个字节。</p>
-<p>举例：</p>
-<p><code>秃</code>的unicode为79C3「0111 1001 1100 0011(B)」，根据上表处于 (0000 0080-0000 FFFF)范围内，因此UTF-8需要三个字节，即格式为1110xxxx 10xxxxxx 10xxxxxx，将unicode从最后一位往前依次填入格式x中，多出的补0。可以得出UTF-8编码为11100111 10100111 10000011，转为十六进制为E7A783。</p>
-<h3 id="Little-endian-amp-Big-endian"><a href="#Little-endian-amp-Big-endian" class="headerlink" title="Little endian &amp; Big endian"></a>Little endian &amp; Big endian</h3><p>以上面<code>秃</code>为例，unicode码为79C3，需要两个字节存储，一个字节是79，另一个字节是C3。存储的方式79在前，C3在后，就是Big endian(大头方式)；C3在前，79在后就是Little endian(小透方式) </p>
-<h2 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h2><p>Base64是一种基于64个可打印的字符来标识二进制数据的标识方法。可打印的字符包括字母A-Z、a-z、数字0-9，这样公有62个字符，此外两个可打印的符号在不同系统中而不同。</p>
-<blockquote>
-<p>在MIME格式的的电子邮件中，另外两个符号为加号+和斜杠/，等号=用来做后缀用途。</p>
-</blockquote>
-<h3 id="编码转换方式"><a href="#编码转换方式" class="headerlink" title="编码转换方式"></a>编码转换方式</h3><ol>
-<li>将每三个字节作为一组，一共24个二进制位。</li>
-<li>将这24个二进制位分为4组，每个组有6个二进制位。</li>
-<li>在每组前面加两个00，扩展成32个二进制位，及四个字节。</li>
-<li>然后根据下表得到扩展后的每个字节的编号，这就是Base64的编码值。</li>
-</ol>
-<p><img src="http://lvhan-image.test.upcdn.net/2019/10/17/15713219196404.jpg" alt="-w961"></p>
-<p>综上得出：</p>
-<ul>
-<li>Base64字符标中的字符原本用6bit就可以表示，现在前面添加2个0，变为8bit，导致Base64编码后的文本大小比原文大约三分之一</li>
-<li>为什么使用3个字节一组呢？因为6和8的最小公倍数是24，三个字节正好24个二进制位，每6bit一组，恰好能够分为4组。</li>
+<li>使用<code>+imageWithContentsOfFile:</code>从磁盘中加载一张图片，这时候这张图片并没有解压缩</li>
+<li>将UIImage赋值给UIImageView</li>
+<li>接着一个隐式的CATransition捕获到了UIImageView图层数的变化</li>
+<li>在主线程的下一个runloop到来时，Core Animation提交了这个隐式过渡<ul>
+<li>4.1 分配内存缓存区用于管理文件IO和解压操作</li>
+<li>4.2 将文件数据从磁盘读取到内存中</li>
+<li>4.3 将压缩的图片数据解码成未压缩的位图形式，这是个非常耗时的CPU操作</li>
+<li>4.4 最后Core Animation使用未压缩的位图数据渲染UIImageView涂层</li>
 </ul>
-<h3 id="举例如下："><a href="#举例如下：" class="headerlink" title="举例如下："></a>举例如下：</h3><p><img src="http://lvhan-image.test.upcdn.net/2019/10/17/15713223691697.jpg" alt></p>
-<ol>
-<li>“Man”、”a”、”n”的ASCII值分别为77、97、110，对应的二进制值为01001101、01100001、01101110，将他们连成24位的二进制字符串010011010110000101101110。</li>
-<li>将24位的二进制字符串分为四组，即：010011、010110、000101、101110。</li>
-<li>在每组前面加00，扩展成32个二进制位，即00010011、00010110、00000101、00101110。</li>
-<li>根据上表，得到Base64编码为T、W、F、u。</li>
+</li>
 </ol>
-<h4 id="位数不足3位处理"><a href="#位数不足3位处理" class="headerlink" title="位数不足3位处理"></a>位数不足3位处理</h4><ol>
-<li>二位的情况：两个字节工共16个二进制位，按照上面方式分组，每6个一组，则第三组缺少2位，用0补齐。如”Ma”可以转换为三组00010011、00010110、00010000，对应的Base64值分别为T、W、E，再补上一个”=”号，因此”Ma”的Base64编码为”TWE=”</li>
-<li>一位的情况：一字节工8个二进制位，按照上面方式分组，每6个一组，则第二组缺少4位，用0补齐。如”M”可以转换为00010011、00010000，对应的Base64位的值分别为：T、Q，再补上两个”=”号，因此”M”的Base64编码就是TQ==</li>
+<p>上面的步骤，将压缩的图片进行解压缩时非常耗时的CPU操作，并且这个操作默认是在主线程执行，因此在需要加载多张大图的时候，就会造成严重的性能问题，比如卡顿。</p>
+<h3 id="图片解压缩的必要性"><a href="#图片解压缩的必要性" class="headerlink" title="图片解压缩的必要性"></a>图片解压缩的必要性</h3><p>既然图片解压缩这么耗性能，我们可不可以不做呢？⚠️当然不能！</p>
+<p>在研究为什么不可以不做图片解压缩操作之前，先了解下什么是<a href="https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/dq_images/dq_images.html#//apple_ref/doc/uid/TP30001066-CH212-SW3" target="_blank" rel="noopener">位图</a>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">苹果官方定义：</span><br><span class="line">A bitmap image (or sampled image) is an array of pixels (or samples). Each pixel represents a single point in the image. JPEG, TIFF, and PNG graphics files are examples of bitmap images.</span><br><span class="line"></span><br><span class="line">位图图像（或者采样图像）是像素（或者样本）的数组。每个像素代表图像中的单个点。JPEG、TIFF和PNG文件都是位图图像的例子。</span><br></pre></td></tr></table></figure>
+
+<p>我们知道，不管是JPEG还是PNG，都是一种压缩的位图图形格式。只不过PNG是无损压缩，支持alpha通道，而JPEG是有损压缩，可以指定压缩比例（0-100%）。</p>
+<p>因此，在将磁盘中的图片渲染到屏幕之前，必须先要得到<strong><em>原始像素数据</em></strong>，才能执行后续绘制操作，这就是为什么图片解压缩操作不可省略。</p>
+<h2 id="继续内存问题"><a href="#继续内存问题" class="headerlink" title="继续内存问题"></a>继续内存问题</h2><p>A: 如何解决主线程进行解压缩导致的卡顿等问题？<br>Q: 将解压缩提前在后台线程执行掉，然后CGContextDrawImage() 绘制到画布中，将生成的图片存到缓存中，从而避免让系统区做额外的解压缩操作。这也是SDWebImage的底层实现。</p>
+<p>但是既然这么做是为了优化性能问题，那为什么又会存在严重的内存问题呢？?</p>
+<p>在SDWebImage的issue中有相关的讨论：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">harishkashyap commented on Dec 23, 2014</span><br><span class="line">Its the memory issue again. decodedImageWithImage takes up huge memory and causes the app to crash. I have added an option to put this off in the library but defaulting to YES so there aren&apos;t any breaking changes. If you put off the decodeImageWithImage method in both image cache and image downloader then you shouldn&apos;t be seeing the VM: CG Raster data on the top consuming lots of memory</span><br><span class="line">decodeImageWithImage is supposed to decompress images and cache them so the loading on tableviews/collectionviews become better. However, with large set of images being loaded, the experience worsened and the memory of uncompressed images even with thumbnails can consume GBs of memory. Putting this off only improved performance.</span><br></pre></td></tr></table></figure>
+
+<p>这个讨论中提到，<code>-decodeImageWithImage</code>这个方法用于将图片进行解压缩并缓存起来，以保证tableviews/collections交互流畅。但是如果加载高分辨率的图的话会适得其反，造成庞大的内存消耗。</p>
+<p>CGBitmapContextCreate创建位图方法，每一个像素点都会分配一个空间来存储相关值，高分辨率的图像素点就多，也就需要分配更多的空间。这就是为什么解压缩操作会造成内存飙升。</p>
+<p>而且在图片解压缩后，App第一次退到后台或者收到内存警告时，该图片的缓存才会被清空，其他情况会一直存在于全局缓存中。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ol>
+<li>按需开启和关闭shouldCacheImagesInMemory</li>
+<li>设置maxMemoryCost</li>
+<li>手动调用-clearMemory方法</li>
 </ol>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
-<li>大多数编码都是由字符串转换为二进制的过程，而Base64的编码则是从二进制转为字符串。</li>
-<li>Base64主要用在传输，存储，表示二进制领域，不能算得上加密，只是无法直接看到铭文。</li>
-<li>中文有很多编码（比如：UTF-8、GB2312、GBK等），不同的编码对应的Base64编码结果不一样。</li>
-</ul>
 
       
     </div>
@@ -462,8 +426,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/13/sh脚本语法/" rel="next" title="sh脚本语法">
-                <i class="fa fa-chevron-left"></i> sh脚本语法
+              <a href="/2020/03/12/【Swiftlint】帮你定规范/" rel="next" title="【Swiftlint】帮你定规范">
+                <i class="fa fa-chevron-left"></i> 【Swiftlint】帮你定规范
               </a>
             
           </div>
@@ -471,10 +435,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/01/15/HTTP协议之基础入门/" rel="prev" title="原来HTTP协议这么简单">
-                原来HTTP协议这么简单 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -621,7 +581,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ASCII"><span class="nav-number">1.</span> <span class="nav-text">ASCII</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unicode"><span class="nav-number">2.</span> <span class="nav-text">Unicode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UTF-8"><span class="nav-number">3.</span> <span class="nav-text">UTF-8</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UTF-8-与-Unicode区别"><span class="nav-number">3.1.</span> <span class="nav-text">UTF-8 与 Unicode区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UTF-8编码规则"><span class="nav-number">3.2.</span> <span class="nav-text">UTF-8编码规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Little-endian-amp-Big-endian"><span class="nav-number">3.3.</span> <span class="nav-text">Little endian &amp; Big endian</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Base64"><span class="nav-number">4.</span> <span class="nav-text">Base64</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编码转换方式"><span class="nav-number">4.1.</span> <span class="nav-text">编码转换方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#举例如下："><span class="nav-number">4.2.</span> <span class="nav-text">举例如下：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#位数不足3位处理"><span class="nav-number">4.2.1.</span> <span class="nav-text">位数不足3位处理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">4.3.</span> <span class="nav-text">注意事项</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SDWebImage内存爆增问题及Image解压缩"><span class="nav-number">1.</span> <span class="nav-text">SDWebImage内存爆增问题及Image解压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析定位"><span class="nav-number">1.2.</span> <span class="nav-text">分析定位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充知识：图片解压缩"><span class="nav-number">1.3.</span> <span class="nav-text">补充知识：图片解压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图片加载过程"><span class="nav-number">1.3.1.</span> <span class="nav-text">图片加载过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图片解压缩的必要性"><span class="nav-number">1.3.2.</span> <span class="nav-text">图片解压缩的必要性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继续内存问题"><span class="nav-number">1.4.</span> <span class="nav-text">继续内存问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">1.5.</span> <span class="nav-text">解决方案</span></a></li></ol></li></ol></div>
             
 
           </div>
