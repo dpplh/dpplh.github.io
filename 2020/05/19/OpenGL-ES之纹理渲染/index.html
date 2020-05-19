@@ -86,12 +86,12 @@
 <meta property="og:site_name" content="DPP&#39;s Blog">
 <meta property="og:description" content="使用GLKit和GLSL渲染纹理.">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2020/05/19/OpenGL-ES之纹理渲染/lvhan-image.test.upcdn.net/2020/05/19/OpenGL配图.jpg">
-<meta property="og:updated_time" content="2020-05-19T02:28:17.262Z">
+<meta property="og:image" content="http://lvhan-image.test.upcdn.net/2020/05/19/OpenGL配图.jpg">
+<meta property="og:updated_time" content="2020-05-19T02:40:13.946Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenGL ES之纹理渲染">
 <meta name="twitter:description" content="使用GLKit和GLSL渲染纹理.">
-<meta name="twitter:image" content="http://yoursite.com/2020/05/19/OpenGL-ES之纹理渲染/lvhan-image.test.upcdn.net/2020/05/19/OpenGL配图.jpg">
+<meta name="twitter:image" content="http://lvhan-image.test.upcdn.net/2020/05/19/OpenGL配图.jpg">
 
 
 
@@ -350,8 +350,8 @@
           
           
             <div class="post-gallery-row">
-              <a class="post-gallery-img fancybox" href="/lvhan-image.test.upcdn.net/2020/05/19/OpenGL配图.jpg" rel="gallery_ckadaxkav0007dfkhgua445ax" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-                <img src="/lvhan-image.test.upcdn.net/2020/05/19/OpenGL配图.jpg" itemprop="contentUrl">
+              <a class="post-gallery-img fancybox" href="http://lvhan-image.test.upcdn.net/2020/05/19/OpenGL配图.jpg" rel="gallery_ckadb83fr0006iukhqrnuogn5" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="http://lvhan-image.test.upcdn.net/2020/05/19/OpenGL配图.jpg" itemprop="contentUrl">
               </a>
             
           
@@ -365,7 +365,7 @@
         <h1 id="OpenGL-ES之纹理渲染"><a href="#OpenGL-ES之纹理渲染" class="headerlink" title="OpenGL ES之纹理渲染"></a>OpenGL ES之纹理渲染</h1><h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>OpenGL是Khronos Group开发维护的一个规范，它主要为我们定义了用来操作图形和图片的一些列函数API，需要注意的是OpenGL本身并不是API。</p>
 <p>GPU的硬件开发商则需要提供满足OpenGL规范的实现，这些实现通常被称之为“驱动”，他们负责OpenGL定义的API命令翻译为GPU指令。</p>
 <p>OpenGL ES（(OpenGL for Embedded Systems) ）是OpenGL三维图形的API的子集，针对手机、PDA和游戏主机等嵌入式设备儿设计。</p>
-<h2 id="二、基础概念"><a href="#二、基础概念" class="headerlink" title="二、基础概念"></a>二、基础概念</h2><p><img src="lvhan-image.test.upcdn.net/2020/05/19/15875238251538.jpg" alt="-w613"></p>
+<h2 id="二、基础概念"><a href="#二、基础概念" class="headerlink" title="二、基础概念"></a>二、基础概念</h2><p><img src="http://lvhan-image.test.upcdn.net/2020/05/19/15875238251538.jpg" alt></p>
 <p>渲染管线接受一组3D坐标，然后把它们转变为你屏幕上的有色2D像素输出。图形渲染管线可以被分为上面几个阶段，每个阶段会把前一个阶段的输出作为输入。</p>
 <blockquote>
 <p>注意蓝色部分是我们可以注入自定义的着色器部分</p>
@@ -380,21 +380,21 @@
 </ul>
 <h3 id="1、帧缓存"><a href="#1、帧缓存" class="headerlink" title="1、帧缓存"></a>1、帧缓存</h3><p>用来接收GPU渲染出来的2D图像像素数据的缓冲区叫做帧缓存。帧缓存可以同时存在多个，并通过OpenGL ES让GPU把渲染结果存储到任意数量的帧缓存中。</p>
 <p>程序和操作系统会把渲染结果保存到后帧缓存在内的其他帧缓存中。当渲染后的后帧缓存包含一个完整的图像时，前帧缓存和后帧缓存会瞬间切换。</p>
-<p><img src="lvhan-image.test.upcdn.net/2020/05/19/15846242983755.jpg" alt></p>
+<p><img src="http://lvhan-image.test.upcdn.net/2020/05/19/15846242983755.jpg" alt></p>
 <h3 id="2、OpenGL-坐标系"><a href="#2、OpenGL-坐标系" class="headerlink" title="2、OpenGL 坐标系"></a>2、OpenGL 坐标系</h3><p>OpenGL ES总是开始于一个矩形的笛卡尔坐标系，这意味着任意两个轴之间的角度都是90度。空间中的每个位置称之为顶点，每个顶点通过其X、Y、Z轴上的位置被定义。</p>
 <p>OpenGL ES坐标都是浮点数储存的，并且没有单位。</p>
-<p><img src="lvhan-image.test.upcdn.net/2020/05/19/15875599191827.jpg" alt="-w823"></p>
+<p><img src="http://lvhan-image.test.upcdn.net/2020/05/19/15875599191827.jpg" alt></p>
 <h3 id="3、纹理"><a href="#3、纹理" class="headerlink" title="3、纹理"></a>3、纹理</h3><p>纹理是用来保存图像的颜色元素值的OpenGL ES缓存。</p>
 <p>纹素：当用图像初始化一个纹理缓存后，这个图像的每个像素变成了纹理的一个纹素，与像素类似，纹素保存颜色数据。像素通常表示计算机屏幕上的一个世纪的颜色点；而纹素存在于一个虚拟的没有尺寸的坐标系中。</p>
 <h3 id="4、-纹理坐标系"><a href="#4、-纹理坐标系" class="headerlink" title="4、 纹理坐标系"></a>4、 纹理坐标系</h3><p>纹理坐标系为一个命名为S和T的2D轴。在一个纹理中无论有多少纹素，纹理的尺寸永远在S轴上从0.0到1.0，T轴上从0.0到1.0.</p>
-<p><img src="lvhan-image.test.upcdn.net/2020/05/19/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84.jpg" alt="纹理映射"></p>
+<p><img src="http://lvhan-image.test.upcdn.net/2020/05/19/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84.jpg" alt></p>
 <h3 id="5、片元"><a href="#5、片元" class="headerlink" title="5、片元"></a>5、片元</h3><ul>
 <li><p>点阵化(rasterizing)：转换几何图形数据为帧缓存中的颜色像素的渲染步骤叫做点阵化，每个颜色像素叫做片元。</p>
 </li>
 <li><p>映射(mapping)：指定怎么对齐纹理和顶点，以便让GPU知道每个片元颜色由哪些纹素决定。每个顶点还会给出U和V的坐标值，每个U坐标会映射顶点到视窗中的最终位置到纹理中的沿着S轴的一个位置，V坐标映射到T轴。</p>
 </li>
 </ul>
-<p><img src="lvhan-image.test.upcdn.net/2020/05/19/15875235646965.jpg" alt="-w877"></p>
+<p><img src="http://lvhan-image.test.upcdn.net/2020/05/19/15875235646965.jpg" alt></p>
 <ul>
 <li>取样(sampling):GPU根据计算出来的每个片元的U、V位置从绑定的纹理中选择纹素。</li>
 </ul>
@@ -414,7 +414,7 @@
 <li><p>7、 删除:glDeleteBuffers() - 告诉OpenGL ES删除以前生成的缓存并释放相关资源</p>
 </li>
 </ul>
-<h3 id="7、绘制序列"><a href="#7、绘制序列" class="headerlink" title="7、绘制序列"></a>7、绘制序列</h3><p><img src="lvhan-image.test.upcdn.net/2020/05/19/15898515433625.jpg" alt></p>
+<h3 id="7、绘制序列"><a href="#7、绘制序列" class="headerlink" title="7、绘制序列"></a>7、绘制序列</h3><p><img src="http://lvhan-image.test.upcdn.net/2020/05/19/15898515433625.jpg" alt></p>
 <h2 id="三、使用GLKit渲染图片"><a href="#三、使用GLKit渲染图片" class="headerlink" title="三、使用GLKit渲染图片"></a>三、使用GLKit渲染图片</h2><p>1、定义结构体并初始化顶点和纹理坐标</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    GLKVector3 positionCoord;   // 顶点坐标(x, y, z)</span><br><span class="line">    GLKVector2 textureCoord;    // 纹理坐标(U, V)</span><br><span class="line">&#125; SenceVertex;</span><br><span class="line"></span><br><span class="line">const SenceVertex vertices[] = &#123;</span><br><span class="line">    &#123;&#123;-0.5, -0.5, 0.0&#125;, &#123;0.0, 0.0&#125;&#125;,  // 左下角</span><br><span class="line">    &#123;&#123; 0.5, -0.5, 0.0&#125;, &#123;1.0, 0.0&#125;&#125;,  // 右下角</span><br><span class="line">    &#123;&#123;-0.5,  0.5, 0.0&#125;, &#123;0.0, 1.0&#125;&#125;,  // 左上角</span><br><span class="line">    &#123;&#123; 0.5,  0.5, 0.0&#125;, &#123;1.0, 1.0&#125;&#125;   // 右上角</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
@@ -430,7 +430,7 @@
 <p>4、实现GLKView代理的渲染回掉</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">- (void)glkView:(GLKView *)view drawInRect:(CGRect)rect &#123;</span><br><span class="line">    [self.baseEffect prepareToDraw];</span><br><span class="line">    glClear(GL_COLOR_BUFFER_BIT);</span><br><span class="line">    </span><br><span class="line">    // 顶点</span><br><span class="line">    glEnableVertexAttribArray(GLKVertexAttribPosition); // 启用顶点缓存数据</span><br><span class="line">    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, sizeof(SenceVertex), NULL + offsetof(SenceVertex, positionCoord));    // 设置顶点数据指针</span><br><span class="line">    // 纹理</span><br><span class="line">    glEnableVertexAttribArray(GLKVertexAttribTexCoord0);    // 启用纹理缓存数据</span><br><span class="line">    glVertexAttribPointer(GLKVertexAttribTexCoord0, 2, GL_FLOAT, GL_FALSE, sizeof(SenceVertex), NULL + offsetof(SenceVertex, textureCoord));    // 设置纹理数据指针</span><br><span class="line">    // 绘制</span><br><span class="line">    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="四、使用GLSL渲染图片"><a href="#四、使用GLSL渲染图片" class="headerlink" title="四、使用GLSL渲染图片"></a>四、使用GLSL渲染图片</h2><p><img src="lvhan-image.test.upcdn.net/2020/05/19/%E4%BD%BF%E7%94%A8%E7%A8%8B%E5%BA%8F.jpg" alt="使用程序"></p>
+<h2 id="四、使用GLSL渲染图片"><a href="#四、使用GLSL渲染图片" class="headerlink" title="四、使用GLSL渲染图片"></a>四、使用GLSL渲染图片</h2><p><img src="http://lvhan-image.test.upcdn.net/2020/05/19/%E4%BD%BF%E7%94%A8%E7%A8%8B%E5%BA%8F.jpg" alt></p>
 <p>1、新建顶点着色器和片元着色器</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 顶点着色器</span><br><span class="line">attribute vec4 Position;</span><br><span class="line">attribute vec2 InputTextureCoordinate;</span><br><span class="line"></span><br><span class="line">varying vec2 TextureCoordinate;</span><br><span class="line"></span><br><span class="line">void main (void) &#123;</span><br><span class="line">    gl_Position = Position;</span><br><span class="line">    TextureCoordinate = InputTextureCoordinate;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 片元着色器</span><br><span class="line">// 1. 指定默认精度</span><br><span class="line">precision mediump float;</span><br><span class="line">uniform sampler2D InputImageTexture;</span><br><span class="line">// </span><br><span class="line">varying vec2 TextureCoordinate;</span><br><span class="line"></span><br><span class="line">void main() &#123;</span><br><span class="line">    gl_FragColor = texture2D(InputImageTexture, TextureCoordinate);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -445,7 +445,7 @@
 <pre><code>* -loadShader;
 * -compileShader:type:
 * -linkProgram:
-* validateProgram:</code></pre><p><img src="lvhan-image.test.upcdn.net/2020/05/19/%E7%9D%80%E8%89%B2%E5%99%A8%E7%BC%96%E8%AF%91.jpg" alt="着色器编译"></p>
+* validateProgram:</code></pre><p><img src="http://lvhan-image.test.upcdn.net/2020/05/19/%E7%9D%80%E8%89%B2%E5%99%A8%E7%BC%96%E8%AF%91.jpg" alt></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">NSString *filePath = [[NSBundle mainBundle] pathForResource:shaderName</span><br><span class="line">                                                     ofType:(type == GL_VERTEX_SHADER ? @&quot;vsh&quot; : @&quot;fsh&quot;)];</span><br><span class="line">    </span><br><span class="line">NSError *error = nil;</span><br><span class="line">NSString *shaderString = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&amp;error];</span><br><span class="line">if (error) &#123;</span><br><span class="line">    NSAssert(NO, @&quot;文件读取失败&quot;);</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">GLuint shader = glCreateShader(type);</span><br><span class="line">    </span><br><span class="line">const char *shaderStringUTF8 = [shaderString UTF8String];</span><br><span class="line">GLint shaderStringLength = (GLint)[shaderString length];</span><br><span class="line">glShaderSource(shader, 1, &amp;shaderStringUTF8, &amp;shaderStringLength);</span><br><span class="line">    </span><br><span class="line">glCompileShader(shader);</span><br><span class="line">    </span><br><span class="line">GLint compileRes;</span><br><span class="line">glGetShaderiv(shader, GL_COMPILE_STATUS, &amp;compileRes);</span><br><span class="line">if (compileRes == GL_FALSE) &#123;</span><br><span class="line">    GLchar message[256];</span><br><span class="line">    glGetShaderInfoLog(shader, sizeof(message), 0, &amp;message[0]);</span><br><span class="line">    NSAssert(NO, @&quot;着色器编译错误&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>3、程序编译、链接并验证</p>
