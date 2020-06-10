@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DPP's Life">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="使用OpenGL实现立体阿凡达效果.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenGL ES之立体阿凡达效果">
+<meta property="og:url" content="http://yoursite.com/2020/06/10/OpenGL-ES之立体阿凡达效果/index.html">
+<meta property="og:site_name" content="DPP&#39;s Blog">
+<meta property="og:description" content="使用OpenGL实现立体阿凡达效果.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://lvhan-image.test.upcdn.net/2020/06/10/440562_gaitubao_900x500-1.jpg">
+<meta property="og:updated_time" content="2020-06-10T08:49:45.664Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenGL ES之立体阿凡达效果">
+<meta name="twitter:description" content="使用OpenGL实现立体阿凡达效果.">
+<meta name="twitter:image" content="http://lvhan-image.test.upcdn.net/2020/06/10/440562_gaitubao_900x500-1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/10/OpenGL-ES之立体阿凡达效果/">
+
+
+
+
+
+  <title>OpenGL ES之立体阿凡达效果 | DPP's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DPP's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/10/OpenGL-ES之立体阿凡达效果/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DPP">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DPP's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OpenGL ES之立体阿凡达效果</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-10T19:35:26+08:00">
+                2020-06-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/06/10/OpenGL-ES之立体阿凡达效果/" class="leancloud_visitors" data-flag-title="OpenGL ES之立体阿凡达效果">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  使用OpenGL实现立体阿凡达效果.
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+          
+          
+            <div class="post-gallery-row">
+              <a class="post-gallery-img fancybox" href="http://lvhan-image.test.upcdn.net/2020/06/10/440562_gaitubao_900x500-1.jpg" rel="gallery_ckb93q5sb0006dykh5vg6lwp9" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="http://lvhan-image.test.upcdn.net/2020/06/10/440562_gaitubao_900x500-1.jpg" itemprop="contentUrl">
+              </a>
+            
+          
+
+          
+          </div>
+        </div>
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在技术群里，有个小伙伴发了这个视频和三张解包出来素材，群里讨论用OpenGL实现，引起了我的兴趣，以下我们用iOS实现下。</p>
+<p><img src="http://lvhan-image.test.upcdn.net/2020/06/10/1725fbfd35d5e4a0.gif" alt></p>
+<h2 id="构成"><a href="#构成" class="headerlink" title="构成"></a>构成</h2><p>这个效果包含三张素材：背景、人物、粒子。</p>
+<p><a href="http://lvhan-image.test.upcdn.net/2020/06/10/%E9%98%BF%E5%87%A1%E8%BE%BE%E5%B1%82%E7%BA%A7%E5%9B%BE2.png" target="_blank" rel="noopener">http://lvhan-image.test.upcdn.net/2020/06/10/%E9%98%BF%E5%87%A1%E8%BE%BE%E5%B1%82%E7%BA%A7%E5%9B%BE2.png</a></p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="1、绘制三张纹理"><a href="#1、绘制三张纹理" class="headerlink" title="1、绘制三张纹理"></a>1、绘制三张纹理</h3><p>注意点：</p>
+<ul>
+<li>1、每次绘制三张纹理只做一次清屏</li>
+<li>2、从后往前绘制三张纹理</li>
+<li>3、<a href="https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/03%20Blending/" target="_blank" rel="noopener">开启混合模式</a></li>
+<li>4、<a href="https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/01%20Depth%20testing/" target="_blank" rel="noopener">禁用深度测试</a>，如果不禁用深度测试，三张纹理的纹理坐标的z轴需要不一样，否则会有意想不到的渲染错误</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">glClearColor(1.0, 1.0, 1.0, 1.0);</span><br><span class="line"></span><br><span class="line">// 开启混合</span><br><span class="line">glEnable(GL_BLEND);</span><br><span class="line">glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);</span><br><span class="line"></span><br><span class="line">// 禁用深度测试</span><br><span class="line">glDisable(GL_DEPTH_TEST);</span><br><span class="line">glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);</span><br><span class="line">glViewport(0, 0, width, height);</span><br><span class="line">    </span><br><span class="line">// 背景</span><br><span class="line">glBindTexture(GL_TEXTURE_2D, _backgroundTexture);</span><br><span class="line">glDrawElements(GL_TRIANGLE_STRIP, sizeof(indexs), GL_UNSIGNED_BYTE, 0);</span><br><span class="line"></span><br><span class="line">// 人物</span><br><span class="line">glBindTexture(GL_TEXTURE_2D, _avatarTexture);</span><br><span class="line">glDrawElements(GL_TRIANGLE_STRIP, sizeof(indexs), GL_UNSIGNED_BYTE, 0);</span><br><span class="line"></span><br><span class="line">// 前景</span><br><span class="line">glBindTexture(GL_TEXTURE_2D, _prospectTexture);</span><br><span class="line">glDrawElements(GL_TRIANGLE_STRIP, sizeof(indexs), GL_UNSIGNED_BYTE, 0);</span><br><span class="line"></span><br><span class="line">glDisable(GL_BLEND);</span><br><span class="line">[self.context presentRenderbuffer:_rbo];</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://lvhan-image.test.upcdn.net/2020/06/10/%E6%88%AA%E5%B1%8F2020-06-10%E4%B8%8B%E5%8D%883.41.08.png" alt="-w247"></p>
+<h3 id="2、增加静置时的动画"><a href="#2、增加静置时的动画" class="headerlink" title="2、增加静置时的动画"></a>2、增加静置时的动画</h3><ul>
+<li>2.1 增加转换矩阵，根据时间进行线性缩放，人物与背景、粒子缩放相反，模拟立体效果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 矩阵变换</span><br><span class="line">// 正交投影矩阵</span><br><span class="line">GLKMatrix4 project = GLKMatrix4MakeOrtho(-1.0, 1.0, -1.0, 1.0, 0.1, 100.0);</span><br><span class="line">// 观察矩阵</span><br><span class="line">GLKMatrix4 view = GLKMatrix4MakeLookAt(0.0, 0.0, 3.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);</span><br><span class="line">// 模型矩阵</span><br><span class="line">GLKMatrix4 avatarModel = GLKMatrix4MakeScale(1.5 + scale, 1.5 + scale, 1.0);</span><br><span class="line">GLKMatrix4 otherModel = GLKMatrix4MakeScale(1.5 - scale, 1.5 - scale, 1.0);</span><br><span class="line"></span><br><span class="line">GLKMatrix4 mvp = GLKMatrix4Identity;</span><br><span class="line">mvp = GLKMatrix4Multiply(mvp, project);</span><br><span class="line">mvp = GLKMatrix4Multiply(mvp, view);</span><br><span class="line"></span><br><span class="line">GLKMatrix4 backgroundScale = GLKMatrix4Multiply(mvp, otherModel);</span><br><span class="line">GLKMatrix4 avatarScale = GLKMatrix4Multiply(mvp, avatarModel);</span><br><span class="line">GLKMatrix4 prospectScale = GLKMatrix4Multiply(mvp, otherModel);</span><br></pre></td></tr></table></figure>
+
+<p><img src="http://lvhan-image.test.upcdn.net/2020/06/10/%E9%98%BF%E5%87%A1%E8%BE%BE%E9%9D%99%E6%AD%A2-%E7%BC%A9%E5%B0%8F-1.gif" alt="-w250"></p>
+<blockquote>
+<p>这里的转换矩阵最好在CPU计算好再传入，不要到顶点着色器中再计算，提升性能。</p>
+</blockquote>
+<ul>
+<li>2.2 每次绘制更新顶点着色器转换矩阵</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 背景</span><br><span class="line">glBindTexture(GL_TEXTURE_2D, _backgroundTexture);</span><br><span class="line">glUniformMatrix4fv(mvpUniform, 1, GL_FALSE, (GLfloat *)&amp;backgroundScale);</span><br><span class="line">glDrawElements(GL_TRIANGLE_STRIP, sizeof(indexs), GL_UNSIGNED_BYTE, 0);</span><br><span class="line"></span><br><span class="line">// 人物</span><br><span class="line">glBindTexture(GL_TEXTURE_2D, _avatarTexture);</span><br><span class="line">glUniformMatrix4fv(mvpUniform, 1, GL_FALSE, (GLfloat *)&amp;avatarScale);</span><br><span class="line">glDrawElements(GL_TRIANGLE_STRIP, sizeof(indexs), GL_UNSIGNED_BYTE, 0);</span><br><span class="line"></span><br><span class="line">// 粒子</span><br><span class="line">glBindTexture(GL_TEXTURE_2D, _prospectTexture);</span><br><span class="line">glUniformMatrix4fv(mvpUniform, 1, GL_FALSE, (GLfloat *)&amp;prospectScale);</span><br><span class="line">glDrawElements(GL_TRIANGLE_STRIP, sizeof(indexs), GL_UNSIGNED_BYTE, 0);</span><br></pre></td></tr></table></figure>
+
+<p>顶点着色器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">attribute vec4 Position;</span><br><span class="line">attribute vec2 InputTextureCoordinate;</span><br><span class="line"></span><br><span class="line">varying vec2 TextureCoordinate;</span><br><span class="line">uniform mat4 mvp;</span><br><span class="line"></span><br><span class="line">void main (void) &#123;</span><br><span class="line">    gl_Position = mvp * Position;</span><br><span class="line">    TextureCoordinate = InputTextureCoordinate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、增加移动效果"><a href="#3、增加移动效果" class="headerlink" title="3、增加移动效果"></a>3、增加移动效果</h3><p>CoreMotion，监听陀螺仪 - 欧拉角。</p>
+<p><img src="http://lvhan-image.test.upcdn.net/2020/06/10/15917757677760.jpg" alt></p>
+<p>转换矩阵增加x、y轴的位移，这里人物和背景、粒子乘以不同的位移系数，效果更逼真。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">avatarModel = GLKMatrix4Translate(avatarModel, translationX * 0.8, translationY * 0.8, 1.0);</span><br><span class="line">otherModel = GLKMatrix4Translate(otherModel, translationX, translationY, 1.0);</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、增加背景漩涡效果"><a href="#4、增加背景漩涡效果" class="headerlink" title="4、增加背景漩涡效果"></a>4、增加背景漩涡效果</h3><p>根据滚转角roll模拟背景漩涡效果，片段着色器代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">vec2 whirlpool(vec2 texCoord, float angle) &#123;</span><br><span class="line">    if (abs(angle) &gt; 0.0) &#123;</span><br><span class="line">        float res = 100.0;</span><br><span class="line">        vec2 newTexCoord = texCoord;</span><br><span class="line">        </span><br><span class="line">        float radius = res * uR;</span><br><span class="line">        vec2 xy = res * newTexCoord;</span><br><span class="line">        vec2 dxy = xy - vec2(res / 2.0, res / 2.0);</span><br><span class="line">        </span><br><span class="line">        float r = length(dxy);</span><br><span class="line">        float beta = atan(dxy.y, dxy.x) + radians(angle) * 2.0 * (1.0-(r/radius) * (r/radius));</span><br><span class="line">        if (r &lt;= radius) &#123;</span><br><span class="line">            xy = vec2(res/2.0, res/2.0) + r*vec2(cos(beta), sin(beta));</span><br><span class="line">            </span><br><span class="line">            newTexCoord = xy / res;</span><br><span class="line">            </span><br><span class="line">            return newTexCoord;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return texCoord;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        return texCoord;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void main() &#123;</span><br><span class="line">    vec2 whirlpoolCoord = whirlpool(TextureCoordinate, RotateAngle);</span><br><span class="line">    gl_FragColor = texture2D(InputImageTexture, whirlpoolCoord);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5、提亮粒子效果"><a href="#5、提亮粒子效果" class="headerlink" title="5、提亮粒子效果"></a>5、提亮粒子效果</h3><p>在片段着色器中增加RGB饱和度</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void main() &#123;</span><br><span class="line">    vec2 whirlpoolCoord = whirlpool(TextureCoordinate, RotateAngle);</span><br><span class="line">    gl_FragColor = texture2D(InputImageTexture, whirlpoolCoord);</span><br><span class="line">    </span><br><span class="line">    if (IncreaseBrightness &amp;&amp; gl_FragColor.a &gt; 0.05) &#123;</span><br><span class="line">        gl_FragColor += vec4(0.2, 0.2, 0.2, 0.0);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h3><p><img src="http://lvhan-image.test.upcdn.net/2020/06/10/%E9%98%BF%E5%87%A1%E8%BE%BE%E7%A7%BB%E5%8A%A8%20-%E7%BC%A9%E5%B0%8F-3.gif" alt="-w250"></p>
+<p><a href="https://github.com/dpplh/OpenGLES-iOS/tree/master/Avatar" target="_blank" rel="noopener">查看完整代码</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://juejin.im/post/5ed0d4f7518825430c3abc37" target="_blank" rel="noopener">OpenGL ES实现3D阿凡达效果</a></li>
+<li><a href="https://learnopengl-cn.github.io/01%20Getting%20started/08%20Coordinate%20Systems/" target="_blank" rel="noopener">坐标系统</a></li>
+<li><a href="https://learnopengl-cn.github.io/01%20Getting%20started/09%20Camera/" target="_blank" rel="noopener">摄像机</a></li>
+<li><a href="https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/03%20Blending/" target="_blank" rel="noopener">混合</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/19/OpenGL-ES之纹理渲染/" rel="next" title="OpenGL ES之纹理渲染">
+                <i class="fa fa-chevron-left"></i> OpenGL ES之纹理渲染
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="DPP">
+            
+              <p class="site-author-name" itemprop="name">DPP</p>
+              <p class="site-description motion-element" itemprop="description">很懒，随缘更新...</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/dpplh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/01a516f93b5d" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-book"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="lvhan_1215@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构成"><span class="nav-number">2.</span> <span class="nav-text">构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码实现"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、绘制三张纹理"><span class="nav-number">3.1.</span> <span class="nav-text">1、绘制三张纹理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、增加静置时的动画"><span class="nav-number">3.2.</span> <span class="nav-text">2、增加静置时的动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、增加移动效果"><span class="nav-number">3.3.</span> <span class="nav-text">3、增加移动效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、增加背景漩涡效果"><span class="nav-number">3.4.</span> <span class="nav-text">4、增加背景漩涡效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、提亮粒子效果"><span class="nav-number">3.5.</span> <span class="nav-text">5、提亮粒子效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最终效果"><span class="nav-number">3.6.</span> <span class="nav-text">最终效果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DPP</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("s9C3pTBFYISN8KXScgXCG8i6-gzGzoHsz", "tlXbQUH8NYRJbxrVxpErnhD8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
