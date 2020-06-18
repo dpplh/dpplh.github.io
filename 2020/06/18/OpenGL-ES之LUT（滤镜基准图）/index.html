@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DPP's Life">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="LUT原理及滤镜基准图实现.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenGL ES之LUT（滤镜基准图）">
+<meta property="og:url" content="http://yoursite.com/2020/06/18/OpenGL-ES之LUT（滤镜基准图）/index.html">
+<meta property="og:site_name" content="DPP&#39;s Blog">
+<meta property="og:description" content="LUT原理及滤镜基准图实现.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://lvhan-image.test.upcdn.net/2020/06/18/%E6%9C%AA%E6%A0%87%E9%A2%98-2-2.png">
+<meta property="og:updated_time" content="2020-06-18T03:34:26.915Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenGL ES之LUT（滤镜基准图）">
+<meta name="twitter:description" content="LUT原理及滤镜基准图实现.">
+<meta name="twitter:image" content="http://lvhan-image.test.upcdn.net/2020/06/18/%E6%9C%AA%E6%A0%87%E9%A2%98-2-2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/18/OpenGL-ES之LUT（滤镜基准图）/">
+
+
+
+
+
+  <title>OpenGL ES之LUT（滤镜基准图） | DPP's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">DPP's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/18/OpenGL-ES之LUT（滤镜基准图）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DPP">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DPP's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OpenGL ES之LUT（滤镜基准图）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-18T11:32:40+08:00">
+                2020-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenGL/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenGL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/06/18/OpenGL-ES之LUT（滤镜基准图）/" class="leancloud_visitors" data-flag-title="OpenGL ES之LUT（滤镜基准图）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  LUT原理及滤镜基准图实现.
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+          
+          
+            <div class="post-gallery-row">
+              <a class="post-gallery-img fancybox" href="http://lvhan-image.test.upcdn.net/2020/06/18/%E6%9C%AA%E6%A0%87%E9%A2%98-2-2.png" rel="gallery_ckbk8de9s00061gkh40m1x0hp" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="http://lvhan-image.test.upcdn.net/2020/06/18/%E6%9C%AA%E6%A0%87%E9%A2%98-2-2.png" itemprop="contentUrl">
+              </a>
+            
+          
+
+          
+          </div>
+        </div>
+      
+
+      
+        <h1 id="OpenGL-ES之LUT（滤镜基准图）"><a href="#OpenGL-ES之LUT（滤镜基准图）" class="headerlink" title="OpenGL ES之LUT（滤镜基准图）"></a>OpenGL ES之LUT（滤镜基准图）</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Look Up Table（简称LUT，查找表)。输入一个值，然后通过查找表来得到一个输出值。在调色领域中，称为颜色查找表，查找表的分量为R、G、B，是一种降低GPU运算量的技术，通过将颜色值存储在一张表中，在需要的时候通过索引在这张表上找到对应的颜色值。这是一种使用空间换时间的算法。</p>
+<blockquote>
+<p>LUT分为1D和3D，本质的区别在于索引的输出所需要的索引数</p>
+</blockquote>
+<h2 id="从RGB色彩讲起"><a href="#从RGB色彩讲起" class="headerlink" title="从RGB色彩讲起"></a>从RGB色彩讲起</h2><p>我们知道光的三原色是红（Red）、绿（Green)、蓝（Blue)，也就是RGB，我们将这三种光按不同比例混合就可以得到丰富的色彩。我们规定R、G、B三者的取值范围为[0, 255]，0表示不发光，255表示发出最强的光，因此RGB(255, 0, 0)表示纯红色，同理RGB(0, 255, 0)表示纯绿色，RGB(0, 0, 255)纯蓝色。</p>
+<h2 id="3D-LUT"><a href="#3D-LUT" class="headerlink" title="3D LUT"></a>3D LUT</h2><p>在滤镜的LUT效果应用中，通常是将用3D LUT预存效果的RGB值。在8bit的RGB色域空间中，每个分量的取值范围为[0, 255]，一张完整的色域空间就为256 * 256 * 256 = 16581375bit = 16M。但实际上并不需要那么多颜色，通常会列举节点来储存，两个节点之间的颜色通过线性插值得出。</p>
+<p><img src="http://lvhan-image.test.upcdn.net/2020/06/18/LUT3D-s.png" alt="LUT3D-s"></p>
+<h3 id="1、表现形式"><a href="#1、表现形式" class="headerlink" title="1、表现形式"></a>1、表现形式</h3><p>3D LUT的储存就是一堆RGB数据，它可以使用以下三种方式进行表示：</p>
+<ul>
+<li>1、三维数组</li>
+<li>2、颜色方块</li>
+</ul>
+<p><img src="http://lvhan-image.test.upcdn.net/2020/06/18/LUT-3D3.png" alt="LUT-3D3"></p>
+<ul>
+<li>3、颜色图片</li>
+</ul>
+<p><img src="http://lvhan-image.test.upcdn.net/2020/06/18/LUT%201D.png" alt="LUT 1D"></p>
+<h3 id="2、颜色图片"><a href="#2、颜色图片" class="headerlink" title="2、颜色图片"></a>2、颜色图片</h3><p>颜色图片的本质就是将颜色方块进行二维化处理。上述颜色图片分辨率为512*512，里面有8*8的大格子，每个大格子中存有64*64个小格子，用来存储色彩像素点。</p>
+<p>每个小格子如下图所示，X轴表示[0, 255]的R通道，Y轴表示[0, 255]的G通道。B通道分量放在了8*8的大格子中，从左到右从上到下，最后将RGB三个分量叠加</p>
+<blockquote>
+<p>一张颜色图片一功能储存64 * 64 * 64 = 512 * 512 = 262144种色彩</p>
+</blockquote>
+<h3 id="3、输出一张标准LUT图片"><a href="#3、输出一张标准LUT图片" class="headerlink" title="3、输出一张标准LUT图片"></a>3、输出一张标准LUT图片</h3><ul>
+<li>1、创建RGBA原始数据</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">RGBA rgba[8 * 64][8 * 64];</span><br><span class="line">    </span><br><span class="line">for (int by = 0; by &lt; 8; by++) &#123;</span><br><span class="line">    for (int bx = 0; bx &lt; 8; bx++) &#123;</span><br><span class="line">        for (int g = 0; g &lt; 64; g++) &#123;</span><br><span class="line">            for (int r = 0; r &lt; 64; r++) &#123;</span><br><span class="line">                // 将RGB[0, 255]分成64份，每份相差4个单位， +0.5做四舍五入运算</span><br><span class="line">                int rr = (int)(r * 255.0 / 63.0 + 0.5);</span><br><span class="line">                int gg = (int)(g * 255.0 / 63.0 + 0.5);</span><br><span class="line">                int bb = (int)((bx + by * 8) * 255.0 / 63.0 + 0.5);</span><br><span class="line">                int aa = 255.0;</span><br><span class="line">                int x = r + bx * 64;</span><br><span class="line">                int y = g + by * 64;</span><br><span class="line">                </span><br><span class="line">                rgba[y][x] = (RGBA)&#123;rr, gg, bb, aa&#125;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>2、写入数据，生成图片</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">int width = 8 * 64;</span><br><span class="line">int height = 8 * 64;</span><br><span class="line">    </span><br><span class="line">size_t bufferLength = width * height * 4;</span><br><span class="line">CGDataProviderRef dataProviderRef = CGDataProviderCreateWithData(NULL, &amp;rgba, bufferLength, NULL);</span><br><span class="line">CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();</span><br><span class="line">    </span><br><span class="line">CGBitmapInfo bitmapInfo = kCGBitmapByteOrderDefault;</span><br><span class="line">CGColorRenderingIntent renderingIntent = kCGRenderingIntentDefault;</span><br><span class="line">    </span><br><span class="line">CGImageRef imageRef = CGImageCreate(width, height, 8, 32, width * 4, colorSpaceRef, bitmapInfo, dataProviderRef, NULL, YES, renderingIntent);</span><br><span class="line">    </span><br><span class="line">uint32_t *pixels = (uint32_t *)malloc(bufferLength);</span><br><span class="line"></span><br><span class="line">CGContextRef contextRef = CGBitmapContextCreate(pixels, width, height, 8, 32, colorSpaceRef, kCGImageAlphaPremultipliedLast);</span><br><span class="line">CGContextDrawImage(contextRef, CGRectMake(0, 0, width, height), imageRef);</span><br><span class="line">UIImage *image = nil;</span><br><span class="line">if ([UIImage respondsToSelector:@selector(imageWithCGImage:scale:orientation:)]) &#123;</span><br><span class="line">    float scale = [UIScreen mainScreen].scale;</span><br><span class="line">    image = [UIImage imageWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    image = [UIImage imageWithCGImage:imageRef];</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">CGImageRelease(imageRef);</span><br><span class="line">CGContextRelease(contextRef);</span><br><span class="line">CGDataProviderRelease(dataProviderRef);</span><br><span class="line">CGColorSpaceRelease(colorSpaceRef);</span><br><span class="line">free(pixels);</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用GLSL实现LUT滤镜"><a href="#使用GLSL实现LUT滤镜" class="headerlink" title="使用GLSL实现LUT滤镜"></a>使用GLSL实现LUT滤镜</h2><h3 id="制作滤镜基准图"><a href="#制作滤镜基准图" class="headerlink" title="制作滤镜基准图"></a>制作滤镜基准图</h3><ul>
+<li>1、 将上述的LUT图片和需要上效果的图片拖进Photoshop</li>
+</ul>
+<p><img src="http://lvhan-image.test.upcdn.net/2020/06/18/ps1.png" alt="ps1"></p>
+<ul>
+<li>2、隐藏LUT图片，进行色彩调整，这里进行了色相、自然饱和度的调整，并调整了曲线，拉高阴影处的曲线。</li>
+</ul>
+<p><img src="http://lvhan-image.test.upcdn.net/2020/06/18/ps2.png" alt="ps2"></p>
+<ul>
+<li>3、隐藏上效果图片，导出LUT图片</li>
+</ul>
+<p><img src="http://lvhan-image.test.upcdn.net/2020/06/18/LUT.png" alt="LUT"></p>
+<h3 id="Coding"><a href="#Coding" class="headerlink" title="Coding"></a>Coding</h3><p>输入双纹理（如果对于纹理输入绘制不清楚的可以看<a href="https://dpplh.com/2020/05/19/OpenGL-ES%E4%B9%8B%E7%BA%B9%E7%90%86%E6%B8%B2%E6%9F%93/" target="_blank" rel="noopener">OpenGL ES之纹理渲染</a>），InputImageTexture为输入的需要应用效果的图片纹理，InputImageTexture2为基准图纹理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">// glsl.fsh</span><br><span class="line">precision mediump float;</span><br><span class="line"></span><br><span class="line">uniform sampler2D InputImageTexture2;</span><br><span class="line">uniform sampler2D InputImageTexture;</span><br><span class="line">uniform lowp float intensity;</span><br><span class="line"></span><br><span class="line">varying vec2 TextureCoordinate;</span><br><span class="line"></span><br><span class="line">void main() &#123;</span><br><span class="line">    // 取出当前像素的纹素</span><br><span class="line">    highp vec4 textureColor = texture2D(InputImageTexture, TextureCoordinate);</span><br><span class="line">    </span><br><span class="line">    highp float blueColor = textureColor.b * 63.0;</span><br><span class="line">    </span><br><span class="line">    // 计算B通道，看使用哪个像素色块（这里分别对计算结果向上，向下取整，然后再对两者进行线性计算，减小误差）</span><br><span class="line">    highp vec2 quad1;</span><br><span class="line">    quad1.y = floor(floor(blueColor) / 8.0);</span><br><span class="line">    quad1.x = floor(blueColor) - (quad1.y * 8.0);</span><br><span class="line">    </span><br><span class="line">    highp vec2 quad2;</span><br><span class="line">    quad2.y = floor(ceil(blueColor) / 8.0);</span><br><span class="line">    quad2.x = ceil(blueColor) - (quad2.y * 8.0);</span><br><span class="line">    </span><br><span class="line">    // 计算R、G通道</span><br><span class="line">    highp vec2 texPos1;</span><br><span class="line">    texPos1.x = (quad1.x * 0.125) + 0.5/512.0 + ((0.125 - 1.0/512.0) * textureColor.r);</span><br><span class="line">    texPos1.y = (quad1.y * 0.125) + 0.5/512.0 + ((0.125 - 1.0/512.0) * textureColor.g);</span><br><span class="line">     </span><br><span class="line">    highp vec2 texPos2;</span><br><span class="line">    texPos2.x = (quad2.x * 0.125) + 0.5/512.0 + ((0.125 - 1.0/512.0) * textureColor.r);</span><br><span class="line">    texPos2.y = (quad2.y * 0.125) + 0.5/512.0 + ((0.125 - 1.0/512.0) * textureColor.g);</span><br><span class="line">    </span><br><span class="line">    // 根据转换后的纹理坐标，在基准图上取色</span><br><span class="line">    lowp vec4 newColor1 = texture2D(InputImageTexture2, texPos1);</span><br><span class="line">    lowp vec4 newColor2 = texture2D(InputImageTexture2, texPos2);</span><br><span class="line">    </span><br><span class="line">    // 对计算出来的两个色值，线性求平均(fract：取小数点后值)</span><br><span class="line">    lowp vec4 newColor = mix(newColor1, newColor2, fract(blueColor));</span><br><span class="line">    </span><br><span class="line">    // intensity 按需计算滤镜透明度，混合计算前后的色值</span><br><span class="line">    gl_FragColor = mix(textureColor, vec4(newColor.rgb, textureColor.w), intensity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><h5 id="1、坐标系"><a href="#1、坐标系" class="headerlink" title="1、坐标系"></a>1、坐标系</h5><p>UIKit坐标系Y轴朝下，CoreGraphics、OpenGL坐标系Y轴朝上，两者颠倒，所以在做图片生成纹理的时候要注意坐标系变换</p>
+<p><img src="http://lvhan-image.test.upcdn.net/2020/06/18/%E5%9D%90%E6%A0%87%E7%B3%BB.png" alt="坐标系"><br>在<a href="https://dpplh.com/2020/05/19/OpenGL-ES%E4%B9%8B%E7%BA%B9%E7%90%86%E6%B8%B2%E6%9F%93/" target="_blank" rel="noopener">OpenGL ES之纹理渲染</a>文章中，为了正确渲染图片到UIKit上，图片生成纹理的时候在CoreGraphics做了Transform转换操作。然而我们基准图在生成纹理的时候不需要做转换操作，否则会导致基准图颠倒，色值查找错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">- (GLuint)texture:(BOOL)needTransform &#123;</span><br><span class="line">    CGImageRef imageRef = self.CGImage;</span><br><span class="line">    </span><br><span class="line">    GLint width = (GLint)CGImageGetWidth(imageRef);</span><br><span class="line">    GLint height = (GLint)CGImageGetHeight(imageRef);</span><br><span class="line">    CGRect rect = CGRectMake(0, 0, width, height);</span><br><span class="line">    </span><br><span class="line">    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();</span><br><span class="line">    void * imageData = malloc(width * height * 4);</span><br><span class="line">    CGContextRef contextRef = CGBitmapContextCreate(imageData, width, height, 8, 4 * width, colorSpaceRef, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);</span><br><span class="line">    </span><br><span class="line">    CGColorSpaceRelease(colorSpaceRef);</span><br><span class="line">    </span><br><span class="line">    if (needTransform) &#123;</span><br><span class="line">        CGContextTranslateCTM(contextRef, 0, height);</span><br><span class="line">        CGContextScaleCTM(contextRef, 1.0, -1.0);</span><br><span class="line">    &#125;</span><br><span class="line">    CGContextDrawImage(contextRef, rect, imageRef);</span><br><span class="line">    </span><br><span class="line">    GLuint textureID;</span><br><span class="line">    glGenBuffers(1, &amp;textureID);</span><br><span class="line">    glBindTexture(GL_TEXTURE_2D, textureID);</span><br><span class="line">    </span><br><span class="line">    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);</span><br><span class="line">    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);</span><br><span class="line">    </span><br><span class="line">    glBindTexture(GL_TEXTURE_2D, 0);</span><br><span class="line">    </span><br><span class="line">    CGContextRelease(contextRef);</span><br><span class="line">    free(imageData);</span><br><span class="line">    </span><br><span class="line">    return textureID;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为了解决渲染图片方向问题，我们可以有两种方式解决：</p>
+<ul>
+<li>1、图片纹理可以进行Transform，基准图纹理不Transform</li>
+<li>2、图片和基准图都不进行Transform，使用转换矩阵MVP</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// glsl.vsh</span><br><span class="line">attribute vec4 Position;</span><br><span class="line">attribute vec2 InputTextureCoordinate;</span><br><span class="line"></span><br><span class="line">varying vec2 TextureCoordinate;</span><br><span class="line">uniform mat4 MVP;</span><br><span class="line"></span><br><span class="line">void main (void) &#123;</span><br><span class="line">    gl_Position = MVP * Position;</span><br><span class="line">    TextureCoordinate = InputTextureCoordinate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 模型矩阵</span><br><span class="line">GLKMatrix4 model = GLKMatrix4MakeScale(1.0, -1.0, 0.0);</span><br><span class="line">// 观察矩阵</span><br><span class="line">GLKMatrix4 view = GLKMatrix4MakeLookAt(0.0, 0.0, 3.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);</span><br><span class="line">// 正交投影矩阵</span><br><span class="line">GLKMatrix4 project = GLKMatrix4MakeOrtho(-1.0, 1.0, -1.0, 1.0, 0.1, 100);</span><br><span class="line">    </span><br><span class="line">GLKMatrix4 mvp = GLKMatrix4Identity;</span><br><span class="line">mvp = GLKMatrix4Multiply(mvp, project);</span><br><span class="line">mvp = GLKMatrix4Multiply(mvp, view);</span><br><span class="line">mvp = GLKMatrix4Multiply(mvp, model);</span><br><span class="line">    </span><br><span class="line">glUniformMatrix4fv(_mvpUniform, 1, GL_FALSE, (GLfloat *)&amp;mvp);</span><br></pre></td></tr></table></figure>
+
+<h3 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h3><p><img src="http://lvhan-image.test.upcdn.net/2020/06/18/%E6%9C%AA%E6%A0%87%E9%A2%98-1.png" alt="未标题-1"></p>
+<p><a href="https://github.com/dpplh/OpenGL_ES_DEMO" target="_blank" rel="noopener">查看完整代码</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/10/OpenGL-ES之立体阿凡达效果/" rel="next" title="OpenGL ES之立体阿凡达效果">
+                <i class="fa fa-chevron-left"></i> OpenGL ES之立体阿凡达效果
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="DPP">
+            
+              <p class="site-author-name" itemprop="name">DPP</p>
+              <p class="site-description motion-element" itemprop="description">很懒，随缘更新...</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/dpplh" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/01a516f93b5d" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-book"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="lvhan_1215@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OpenGL-ES之LUT（滤镜基准图）"><span class="nav-number">1.</span> <span class="nav-text">OpenGL ES之LUT（滤镜基准图）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从RGB色彩讲起"><span class="nav-number">1.2.</span> <span class="nav-text">从RGB色彩讲起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3D-LUT"><span class="nav-number">1.3.</span> <span class="nav-text">3D LUT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、表现形式"><span class="nav-number">1.3.1.</span> <span class="nav-text">1、表现形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、颜色图片"><span class="nav-number">1.3.2.</span> <span class="nav-text">2、颜色图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、输出一张标准LUT图片"><span class="nav-number">1.3.3.</span> <span class="nav-text">3、输出一张标准LUT图片</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用GLSL实现LUT滤镜"><span class="nav-number">1.4.</span> <span class="nav-text">使用GLSL实现LUT滤镜</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#制作滤镜基准图"><span class="nav-number">1.4.1.</span> <span class="nav-text">制作滤镜基准图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Coding"><span class="nav-number">1.4.2.</span> <span class="nav-text">Coding</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#注意"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">注意</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、坐标系"><span class="nav-number">1.4.2.1.1.</span> <span class="nav-text">1、坐标系</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最终效果"><span class="nav-number">1.4.3.</span> <span class="nav-text">最终效果</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DPP</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("s9C3pTBFYISN8KXScgXCG8i6-gzGzoHsz", "tlXbQUH8NYRJbxrVxpErnhD8");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
